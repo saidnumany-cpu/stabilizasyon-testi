@@ -237,3 +237,54 @@ html.mob .nxFig img{height:240px}
 .qrow.up .ql b{font-family:'Kode Mono',monospace;font-weight:400;font-size:11.5px;color:var(--mu)}
 .qrow .tag{font-size:9.5px;padding:4px 0}
 .qrow.cur{box-shadow:inset 3px 0 0 var(--fg)}
+
+/* =====================================================
+   AYDINLIK TEMA  (html.light)
+   ===================================================== */
+html.light{--bg:#F3F2EE;--fg:#14161A;--mu:#5B6169;--line:#C7CBD0;--line2:#E1E2E4;--cy:#0A7D8F;--or:#C24E1A;--pk:#B8146F;--rd:#C8102E;--rl:#B00D28;--red:#C8102E;--am:#9A5B00}
+html.light,html.light body{background:#E4E3DE}
+html.light #stage,html.light #boot{background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.025) 0,rgba(0,0,0,.025) 1px,transparent 1px,transparent 3px)}
+html.light *{text-shadow:none!important}
+html.light [style*="#0C0E12"]{background:#FFFFFF!important}
+html.light [style*="#111318"]{background:#E9E8E3!important}
+html.light [style*="#1A1D22"]{background:#DCDCD7!important}
+html.light #stage [style*="color:#fff"]{color:#FFFFFF}
+html.light svg [stroke="#1A1D22"]{stroke:#E4E4E0}
+html.light svg [stroke="#9AA0A6"]{stroke:#8E949B}
+html.light svg [stroke="#E8E6E1"]{stroke:#14161A}
+html.light svg [stroke="#6C727A"]{stroke:#9AA0A6}
+html.light svg [fill="#5CCFE0"]{fill:#0A7D8F}
+html.light svg[aria-label] rect[fill="url(#g)"]{opacity:1}
+html.light .ctl{background:#FFFFFF}
+html.light .ctl[aria-pressed="true"] .mu{color:#C7CBD0}
+html.light .qrow.cur{background:rgba(0,0,0,.05)}
+html.light button.qrow:hover,html.light button.doc:hover,html.light button.zone:hover{background:rgba(10,125,143,.08)}
+html.light .modal,html.light #toast{background:#FFFFFF}
+html.light .modal{box-shadow:0 0 0 6px rgba(20,22,26,.06),0 30px 80px rgba(0,0,0,.25)}
+html.light #overlay{background:rgba(20,22,26,.42)}
+html.light #stamp{background:rgba(255,255,255,.92)}
+html.light .nxFig{background:radial-gradient(circle at 50% 50%,rgba(184,20,111,.14),transparent 65%),#FFFFFF}
+html.light .sxFig{background:radial-gradient(circle at 50% 50%,rgba(194,78,26,.14),transparent 65%),#FFFFFF}
+html.light .nxImg{background:radial-gradient(circle at 50% 55%,rgba(184,20,111,.16),transparent 70%)!important}
+html.light .nxFig figcaption{background:#F3F2EE}
+html.light .logl.new{animation:fadeinL .5s}
+@keyframes fadeinL{from{background:rgba(10,125,143,.15)}to{background:transparent}}
+html.light #warnband.alarm{animation:alarmL 1s steps(2) infinite}
+@keyframes alarmL{50%{background:rgba(200,16,46,.10)}}
+html.light.mob .actBar{background:rgba(243,242,238,.97)}
+html.light #rot{background:#FFFFFF;color:#14161A;border-color:#0A7D8F}
+html.light #photo,html.light .qav{filter:grayscale(1) contrast(1.05)}
+
+/* =====================================================
+   YAZDIRMA — A4 yatay, tek sayfa
+   ===================================================== */
+@media print{
+  @page{size:A4 landscape;margin:0}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;animation:none!important;transition:none!important}
+  html,body{overflow:visible!important;height:auto!important;background:var(--bg)!important}
+  #fit{position:static!important;display:block!important}
+  #stage{transform:scale(.58)!important;transform-origin:0 0!important;width:1920px!important;height:1080px!important;padding:0!important}
+  #boot,#overlay,#toast,#rot,#ctls,#pauseBar,#pkflash,#stamp{display:none!important}
+  .mstrip>span{display:inline!important}
+}
+html.mob #ctls{grid-template-columns:repeat(3,minmax(0,1fr))}
