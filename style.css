@@ -215,3 +215,13 @@ html.mob .nxFig img{max-height:260px}
 .modal .mb>*{flex:none}
 .nxFig img{height:380px;max-height:none;object-fit:contain}
 html.mob .nxFig img{height:240px}
+/* şeffaf ürün görselleri */
+.nxImg{background:radial-gradient(circle at 50% 55%,rgba(255,79,176,.28),transparent 70%)!important;border-color:var(--line)!important}
+.nxImg img{object-fit:contain;padding:4px 2px 0}
+.nxImg span{color:var(--mu)}
+.nxFig{background:radial-gradient(circle at 50% 50%,rgba(255,79,176,.22),transparent 65%),#0C0E12}
+.nxFig img{padding:14px}
+.sxFig{background:radial-gradient(circle at 50% 50%,rgba(244,112,63,.22),transparent 65%),#0C0E12}
+.sxBtn{display:flex!important;flex-direction:row!important;align-items:center;gap:6px;width:auto}
+.sxBtn img{width:22px;height:32px;object-fit:contain;flex:none;filter:drop-shadow(0 0 4px rgba(244,112,63,.5))}
+.sxBtn:hover .lbl{color:var(--or)}
