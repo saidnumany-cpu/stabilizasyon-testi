@@ -86,7 +86,7 @@ function gen(){
   const given=f+(m?' '+m:'');const ini=TR2A(f[0]+(m?m[0]:'X')+s[0]);
   const id='DZC-'+String(Math.floor(rnd(100,9999))).padStart(4,'0')+'-'+ini;
   const r=Math.random();const dev=r<.5?rnd(.002,.018):(r<.8?rnd(.021,.038):rnd(.046,.12));
-  const rt=pick(ROUTES);const h=Math.floor(rnd(18,21)),mi=Math.floor(rnd(0,5))*10;
+  const rt=window.DZCSectors.route();const h=Math.floor(rnd(18,21)),mi=Math.floor(rnd(0,5))*10;
   const sy=Math.floor(rnd(2098,2100)),ey=sy+2;
   return {id,name:given+' '+s,short:s+', '+f+(m?' '+m[0]+'.':''),given,sur:s,photo:false,dept:dp.d,
     fields:[['GÖREV',dp.g],['YETKİ DÜZEYİ',dp.y],['KAN GRUBU',pick(['0 Rh+','A Rh+','B Rh-','AB Rh+','0 Rh-'])],['SENTETİK TAKVİYE',pick(['AKTİF','AKTİF','ASKIDA'])],['SİSTEM SERİ NO','SYS-'+Math.floor(rnd(1000,9999))+'-'+TR2A(s.slice(0,3))+'-'+Math.floor(rnd(100,999))],['GEÇERLİLİK',sy+'.'+pad(Math.floor(rnd(1,12)))+'.'+pad(Math.floor(rnd(1,28)))+' – '+ey+'.'+pad(Math.floor(rnd(1,12)))+'.'+pad(Math.floor(rnd(1,28)))]],
@@ -225,8 +225,9 @@ function renderCounts(){$('cPass').textContent=cnt.pass.toLocaleString('tr-TR');
 
 /* ================= modal ================= */
 let lastFocus=null;
-function openModal(title,jp,body,buttons){
+function openModal(title,jp,body,buttons,opts){
   lastFocus=document.activeElement;
+  document.querySelector('.modal').classList.toggle('wide',!!(opts&&opts.wide));
   $('mTitle').textContent=title;$('mJp').textContent=jp||'';$('mBody').innerHTML=body;
   const f=$('mFoot');f.innerHTML='';modalPrimary=null;
   (buttons||[{label:'KAPAT',kind:'ghost'}]).forEach(b=>{
@@ -250,7 +251,7 @@ function openDoc(i){
     openModal('MERKEZİ TRANSİT GEÇİŞ BELGESİ','軌道運行システム',
       '<div class="band" style="background:var(--or)"><span class="jp" style="font-size:30px">軌道運行システム</span><span class="disp" style="font-weight:900;font-size:26px">'+esc(cur.route[0])+'</span></div>'+
       '<div class="band" style="background:var(--cy)"><span class="jp" style="font-size:24px">制限区域 · 承認</span><span class="disp" style="font-weight:900;font-size:26px">DZC-81</span></div>'+
-      kv([['YOLCU',cur.name],['PERSONEL KODU',cur.id],['KALKIŞ',cur.dep],['VARIŞ',cur.arr],['GÜZERGÂH',cur.route[0]+' → DZC-81 → '+cur.route[1]],['OCR DOĞRULAMA','K06-3.7 · GEÇERLİ',C.cy]])+
+      kv([['YOLCU',cur.name],['PERSONEL KODU',cur.id],['KALKIŞ',cur.dep],['VARIŞ',cur.arr],['KALKIŞ SEKTÖRÜ',secLabel(cur.route[0])],['VARIŞ SEKTÖRÜ',secLabel(cur.route[1])],['GÜZERGÂH',cur.route[0]+' → DZC-81 → '+cur.route[1]],['OCR DOĞRULAMA','K06-3.7 · GEÇERLİ',C.cy]])+
       '<div class="micro">Bu transit geçiş belgesi sadece sisteme kayıtlı bireyler için geçerlidir ve DZC-81 ağı katı güvenlik protokollerine tabidir. İzinsiz bölge değişimi veya sahte kimlik kullanımı tespit edildiğinde belge derhal iptal edilecektir. 警告:システム違反 durumunda cezai işlem uygulanacaktır. SYS-CHK-99.8 &gt;&gt; AUTH: 10938-X &gt;&gt; TRANS-METRO ORBITAL NETWORKS</div>',
       [{label:'KAPAT',kind:'ghost'},{label:'SEFERİ YENİDEN SORGULA',kind:'primary',primary:true,fn:()=>{log('OK','Sefer '+cur.dep+' '+cur.route[0]+'→DZC-81 yeniden sorgulandı · geçerli');toast('SEFER KAYDI GEÇERLİ',C.cy);SFX.ok();}}]);
   }else if(i===1){
@@ -300,13 +301,40 @@ function openRecord(h){
 function openUpcoming(i){
   const u=upcoming[i];
   openModal('SIRADAKİ DENEK · '+u.id,'待機',
-    face(u,C.mu)+kv([['AD SOYAD',u.name],['DEPARTMAN',u.dept],['GÜZERGÂH',u.route[0]+' → DZC-81 → '+u.route[1]],['SEFER',u.dep+' → '+u.arr],['YETKİ',u.fields[1][1]],['ÖN TARAMA','BEKLENİYOR',C.mu]]),
+    face(u,C.mu)+kv([['AD SOYAD',u.name],['DEPARTMAN',u.dept],['GÜZERGÂH',u.route[0]+' → DZC-81 → '+u.route[1]],['VARIŞ SEKTÖRÜ',secLabel(u.route[1])],['SEFER',u.dep+' → '+u.arr],['YETKİ',u.fields[1][1]],['ÖN TARAMA','BEKLENİYOR',C.mu]]),
     [{label:'KAPAT',kind:'ghost'},...(i>0?[{label:'SIRADA ÖNE AL',kind:'primary',primary:true,fn:()=>{upcoming.unshift(upcoming.splice(i,1)[0]);renderQueue();log('SYS',u.id+' sırada öne alındı');toast('SIRA GÜNCELLENDİ',C.cy);SFX.click();}}]:[])]);
+}
+const secLabel=c=>{const s=window.DZCSectors.get(c);return s?c+' · '+s.name:c;};
+const TCOL=()=>({'ENDÜSTRİ':C.or,'İDARİ':C.rd,'TRANSİT':C.cy,'TARIM':C.am,'LİMAN':C.cy,'MADEN':C.mu,'ENERJİ':C.pk,'SINIR':C.rd,'REKREASYON':C.am});
+function openSectors(focus){
+  const S=window.DZCSectors,col=TCOL();
+  const hl=new Set(cur?[cur.route[0],'DZC-81',cur.route[1]]:['DZC-81']);
+  const types=['TÜMÜ',...Object.values(S.types).map(t=>t[0])];
+  const traffic=c=>{let h=0;for(const ch of c)h=(h*33+ch.charCodeAt(0))%997;return 40+h%380;};
+  openModal('SEKTÖR AĞI · 81 KOD','区域網',
+    '<div class="secTop"><div id="secCard" class="secCard"></div><div class="secTools"><label class="lbl" for="secQ">SEKTÖR ARA · KOD, PLAKA VEYA ARŞİV ADI</label><input id="secQ" class="secQ" type="search" autocomplete="off" placeholder="örn. IZM, 61, Trabzon"><div id="secTypes" class="secTypes"></div></div></div>'+
+    '<div class="micro">2099 Sistem Evreni\'nde şehir adları silinmiştir. Tüm seyahat, kargo ve insan akışı KISALTMA-PLAKA koduyla yönetilir; eski adlar yalnızca arşiv kaydıdır. Vurgulanan sektörler işlemdeki deneğin güzergâhıdır.</div>'+
+    '<div id="secGrid" class="secGrid" role="list"></div>',
+    [{label:'KAPAT',kind:'ghost'}],{wide:true});
+  let ftype='TÜMÜ',sel=focus||(cur?cur.route[0]:'DZC-81');
+  const card=()=>{const s=S.get(sel);if(!s)return;const c=col[s.typeLabel]||C.fg;
+    $('secCard').innerHTML='<div class="disp" style="font-weight:900;font-size:46px;line-height:.9;color:'+c+'">'+esc(s.code)+'</div><div style="font-weight:700;font-size:15px">'+esc(s.name)+'</div>'+
+      kv([['SEKTÖR TİPİ',s.typeLabel,c],['ARŞİV ADI',s.old],['PLAKA',String(s.plate).padStart(2,'0')],['GÜNLÜK TRANSİT',traffic(s.code)+' BİREY'],['DZC-81 BAĞLANTISI',s.code==='DZC-81'?'ANA DÜĞÜM':'ORBİTAL HAT · AKTİF'],['DURUM',hl.has(s.code)?'GÜZERGÂHTA':'İZLEMEDE',hl.has(s.code)?C.cy:C.mu]]);};
+  const grid=()=>{const q=($('secQ').value||'').trim().toLocaleUpperCase('tr');const g=$('secGrid');g.innerHTML='';
+    S.list.filter(s=>(ftype==='TÜMÜ'||s.typeLabel===ftype)&&(!q||s.code.includes(q)||s.abbr.includes(q)||String(s.plate).padStart(2,'0')===q.padStart(2,'0')&&/^\d+$/.test(q)||s.old.toLocaleUpperCase('tr').includes(q)))
+     .forEach(s=>{const b=document.createElement('button');b.type='button';b.className='rb secItem'+(hl.has(s.code)?' hl':'')+(s.code===sel?' sel':'');b.setAttribute('role','listitem');
+      b.innerHTML='<b class="disp"></b><span class="mono t"></span><span class="o"></span>';b.children[0].textContent=s.code;b.children[1].textContent=s.typeLabel;b.children[1].style.color=col[s.typeLabel]||C.mu;b.children[2].textContent=s.old;
+      b.onclick=()=>{SFX.click();sel=s.code;card();grid();};g.appendChild(b);});
+    if(!g.children.length)g.innerHTML='<div class="micro">Eşleşen sektör yok.</div>';};
+  const tb=$('secTypes');types.forEach(t=>{const b=document.createElement('button');b.type='button';b.className='ctl';b.textContent=t;b.setAttribute('aria-pressed',String(t===ftype));
+    b.onclick=()=>{SFX.click();ftype=t;[...tb.children].forEach(x=>x.setAttribute('aria-pressed',String(x.textContent===t)));grid();};tb.appendChild(b);});
+  $('secQ').addEventListener('input',grid);
+  card();grid();setTimeout(()=>{const e=document.querySelector('.secItem.sel');if(e)e.scrollIntoView({block:'nearest'});},40);
 }
 function openHelp(){
   openModal('GÖREVLİ KILAVUZU','手引き',
     '<div class="micro" style="font-size:13px;color:var(--fg)">Her denek için Temel Çizgi Testi otomatik ilerler (7 adım). Test bitince sistem bir öneri verir; karar sende. Kuyruktaki satırlara, taranan belgelere ve yetki matrisindeki bölgelere tıklayarak ayrıntıları açabilirsin.</div>'+
-    kv([['F1 · 1','ONAYLA (test bitince)'],['F2 · 2','BEKLET'],['F3 · 3','NEXUS-X UYGULA'],['F4 · 4','REDDET / KARANTİNA'],['P','TESTİ DURAKLAT / SÜRDÜR'],['M','SESİ AÇ / KAPAT'],['T','AYDINLIK / KARANLIK TEMA'],['ESC','PENCEREYİ KAPAT'],['?','BU KILAVUZ']]),
+    kv([['F1 · 1','ONAYLA (test bitince)'],['F2 · 2','BEKLET'],['F3 · 3','NEXUS-X UYGULA'],['F4 · 4','REDDET / KARANTİNA'],['P','TESTİ DURAKLAT / SÜRDÜR'],['M','SESİ AÇ / KAPAT'],['T','AYDINLIK / KARANLIK TEMA'],['ESC','PENCEREYİ KAPAT'],['S','SEKTÖR AĞI (81 KOD)'],['?','BU KILAVUZ']]),
     [{label:'ANLAŞILDI',kind:'primary',primary:true}]);
 }
 
@@ -401,6 +429,9 @@ addEventListener('beforeprint',()=>{if(started&&!paused){setPause(true,true);res
 addEventListener('afterprint',()=>{document.documentElement.classList.remove('printing');fit();if(resumeAfterPrint){resumeAfterPrint=false;setPause(false,true);}});
 $('cSound').onclick=()=>setSound(!soundOn);
 $('cHelp').onclick=()=>{SFX.click();openHelp();};
+$('cSec').onclick=()=>{if(!started)return;SFX.click();openSectors();};
+$('routeBar').onclick=()=>{if(!started)return;SFX.click();openSectors(cur&&cur.route[0]);};
+$('routeBar').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('routeBar').click();}};
 $('nxImg').onclick=()=>{if(!started)return;SFX.click();openDoc(2);};
 $('sxBtn').onclick=()=>{if(!started)return;SFX.click();openDoc(3);};
 $('cFull').onclick=()=>{SFX.click();try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen().catch(()=>toast('TAM EKRAN BU GÖRÜNÜMDE DESTEKLENMİYOR'));}catch(e){toast('TAM EKRAN BU GÖRÜNÜMDE DESTEKLENMİYOR');}};
@@ -418,6 +449,7 @@ addEventListener('keydown',e=>{
   if(e.key==='p'||e.key==='P'){setPause(!paused);}
   else if(e.key==='m'||e.key==='M'){setSound(!soundOn);}
   else if(e.key==='?'){openHelp();}
+  else if(e.key==='s'||e.key==='S'){openSectors();}
   else if(e.key==='t'||e.key==='T'){applyTheme(theme==='light'?'dark':'light');}
 });
 
@@ -450,7 +482,8 @@ setInterval(()=>{
 },450);
 // ortam olayları
 const AMB=[['SYS','Sensör dizisi ping · 6/6 kanal · 3 ms'],['SYS','Orbital sefer ORB-H-17 DZC-81 peronuna yanaştı'],['OK','Arşiv yazımı blok 448-93-11-0 tamam'],['SYS','SYNTEX-81 sevkiyatı DZ-TAR → DZC-81 kabul edildi'],['WARN','Şerit D: sensör kalibrasyon sapması · teknisyen çağrıldı'],['SYS','ANK-06 senkron · AUTH 10938-X yenilendi'],['SYS','Sismik izleme: fay hattı stabil · 0.0012 g'],['NXS','KRN-9: 2 birey standart ayarlara döndürüldü']];
-(function amb(){setTimeout(()=>{if(started&&!paused){const a=pick(AMB);log(a[0],a[1]);if(Math.random()<.4){cnt.wait=Math.max(6,cnt.wait+(Math.random()<.5?1:-1));renderCounts();}}amb();},rnd(6000,12000));})();
+const secAmb=()=>{const s=pick(window.DZCSectors.list.filter(x=>x.code!=='DZC-81'));return pick([['SYS','Orbital sefer '+s.code+' → DZC-81 peronuna yanaştı'],['OK',s.code+' sektörü senkron · '+s.typeLabel+' kotası doğrulandı'],['WARN',s.code+' hattında gecikme · '+Math.floor(rnd(2,9))+' dk'],['SYS','Kargo bloğu '+s.code+' → ANK-06 transit izni verildi']]);};
+(function amb(){setTimeout(()=>{if(started&&!paused){const a=Math.random()<.5?secAmb():pick(AMB);log(a[0],a[1]);if(Math.random()<.4){cnt.wait=Math.max(6,cnt.wait+(Math.random()<.5?1:-1));renderCounts();}}amb();},rnd(6000,12000));})();
 
 $('base').setAttribute('points',(()=>{const a=[];for(let i=0;i<=200;i++)a.push(i*4+','+(115+Math.sin(i*.32)*7+Math.sin(i*.09)*3).toFixed(1));return a.join(' ');})());
 function frame(){

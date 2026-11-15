@@ -7,7 +7,7 @@
 <meta name="description" content="2099 Sistem Evreni — DZC-81 Geçiş ve Kontrol Düğümü denetim terminali. Said Numan Yücel, Yazı ve Tipografi.">
 <meta name="theme-color" content="#08090B">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Audiowide&family=Tektur:wdth,wght@75..100,400..900&family=Chakra+Petch:wght@400;500;600;700&family=Kode+Mono:wght@400..700&family=VT323&family=M+PLUS+1+Code:wght@400;700&family=Sedgwick+Ave&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="style.css?v=16">
+<link rel="stylesheet" href="style.css?v=17">
 </head>
 <body>
 <div id="fit"><div id="stage">
@@ -52,6 +52,7 @@
     <button type="button" class="ctl" id="cTheme" aria-pressed="false">TEMA: KARANLIK <span class="mu">[T]</span></button>
     <button type="button" class="ctl" id="cFull">TAM EKRAN</button>
     <button type="button" class="ctl" id="cPrint">YAZDIR</button>
+    <button type="button" class="ctl" id="cSec">SEKTÖR AĞI <span class="mu">[S]</span></button>
     <button type="button" class="ctl" id="cHelp">KILAVUZ <span class="mu">[?]</span></button>
   </div>
 </div>
@@ -164,7 +165,7 @@
   <!-- RIGHT -->
   <section class="sec03" style="border-left:1px solid var(--line);padding:16px 24px;gap:11px">
     <div class="secH"><div class="secT"><span style="color:var(--cy)">03</span> — TRANSİT KUYRUĞU</div><div class="secS">ŞERİT B · <span id="qWait">14</span> BEKLEYEN</div></div>
-    <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;background:var(--cy);color:var(--bg)">
+    <div id="routeBar" role="button" tabindex="0" aria-label="Sektör ağını aç" title="Sektör ağını aç (81 kod)" style="cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;background:var(--cy);color:var(--bg)">
       <div style="padding:6px 10px;display:flex;flex-direction:column;gap:1px">
         <span class="jp" style="font-size:15px;line-height:1.1">軌道運行システム</span>
         <span class="mono" style="font-size:9.5px;letter-spacing:1.5px;opacity:.8">YÖRÜNGE SEFER SİSTEMİ</span>
@@ -256,7 +257,8 @@
 </div></div>
 <div id="rot" class="mono">Bu terminal yatay geniş ekran için tasarlandı. En iyi deneyim için cihazını yatay çevir ya da masaüstünde aç. <button type="button" id="rotX">TAMAM</button></div>
 
-<script src="portrait.js?v=16"></script>
-<script src="app.js?v=16"></script>
+<script src="sectors.js?v=17"></script>
+<script src="portrait.js?v=17"></script>
+<script src="app.js?v=17"></script>
 </body>
 </html>

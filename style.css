@@ -308,3 +308,27 @@ html.light #bootBtn:disabled{opacity:.45}
   #stage,#boot{background-image:none!important}
   .mstrip{overflow:hidden!important}
 }
+/* sektör ağı dizini */
+.modal.wide{width:1180px}
+.secTop{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;align-items:start}
+.secCard{display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--fg);padding-left:14px}
+.secTools{display:flex;flex-direction:column;gap:8px}
+.secQ{font-family:'Kode Mono',monospace;font-size:15px;letter-spacing:1px;color:var(--fg);background:transparent;border:1px solid var(--line);padding:10px 12px;outline:none}
+.secQ:focus{border-color:var(--cy)}
+.secTypes{display:flex;flex-wrap:wrap;gap:5px}
+.secTypes .ctl{height:26px}
+.secGrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;max-height:360px;overflow:auto;padding-right:4px}
+.secItem{display:flex;flex-direction:column;gap:2px;border:1px solid var(--line)!important;padding:7px 8px}
+.secItem b{font-weight:800;font-size:16px;line-height:1}
+.secItem .t{font-size:9px;letter-spacing:1px}
+.secItem .o{font-size:10.5px;color:var(--mu);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.secItem:hover{background:rgba(92,207,224,.09)}
+.secItem.hl{border-color:var(--cy)!important;box-shadow:inset 3px 0 0 var(--cy)}
+.secItem.sel{background:var(--fg);color:var(--bg)}
+.secItem.sel .o{color:var(--bg);opacity:.75}
+#routeBar:hover{filter:brightness(1.08)}
+#routeBar:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+html.mob .modal.wide{width:100%}
+html.mob .secTop{grid-template-columns:1fr}
+html.mob .secGrid{grid-template-columns:repeat(3,minmax(0,1fr));max-height:300px}
+html.mob .secCard .disp{font-size:34px!important}
