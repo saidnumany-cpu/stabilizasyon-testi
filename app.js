@@ -169,17 +169,18 @@ function renderZones(){
 }
 const TAG={'GEÇTİ':['transparent',C.cy,C.cy],'BEKLET':['transparent',C.am,C.am],'NEXUS-X':['transparent',C.pk,C.pk],'RET':[C.rd,C.bg,C.rd],'SIRADA':['transparent',C.mu,C.line],'İŞLEMDE':[C.fg,C.bg,C.fg]};
 function renderQueue(){
-  const rows=history.slice(-4).map(h=>({t:h.t,label:h.label,tag:h.tag,kind:'h',ref:h}));
-  rows.forEach((r)=>r.sub=r.ref&&r.ref.s);
-  rows.push({t:clockStr(),label:cur.short+' · '+cur.id.slice(0,8),tag:'İŞLEMDE',kind:'c',sub:cur});
-  upcoming.slice(0,2).forEach((u,i)=>rows.push({t:'—',label:u.id,tag:'SIRADA',kind:'u',idx:i,sub:u}));
+  const hm=t=>t&&t.length>=5&&t[2]===':'?t.slice(0,5):t;
+  const rows=history.slice(-3).map(h=>({t:h.t,label:h.s?h.s.short:h.label,code:h.s?h.s.id:'',tag:h.tag,kind:'h',ref:h,sub:h.s}));
+  rows.push({t:clockStr(),label:cur.short,code:cur.id,tag:'İŞLEMDE',kind:'c',sub:cur});
+  upcoming.slice(0,2).forEach((u,i)=>rows.push({t:'—',label:u.id,code:'',tag:'SIRADA',kind:'u',idx:i,sub:u}));
   const q=$('queue');q.innerHTML='';
-  rows.forEach((r,i)=>{const d=document.createElement('button');d.type='button';d.className='rb qrow'+(r.kind==='c'?' cur':'');
-    d.innerHTML='<span class="mono mu"></span><span class="mono"></span><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500"></span><span class="tag"></span>';
-    d.children[0].textContent=pad(i+1);d.children[1].textContent=r.t;
-    if(r.sub){const im=document.createElement('img');im.src=window.DZCPortrait(r.sub);im.alt='';im.className='qav';d.children[2].appendChild(im);}
-    d.children[2].appendChild(document.createTextNode(r.label));
-    const t=TAG[r.tag];d.children[3].textContent=r.tag;d.children[3].style.background=t[0];d.children[3].style.color=t[1];d.children[3].style.borderColor=t[2];
+  rows.forEach((r,i)=>{const d=document.createElement('button');d.type='button';d.className='rb qrow'+(r.kind==='c'?' cur':'')+(r.kind==='u'?' up':'');
+    d.innerHTML='<span class="qn mono"></span><span class="qt mono"></span><img class="qav" alt=""><span class="ql"><b></b><small class="mono"></small></span><span class="tag"></span>';
+    d.children[0].textContent=pad(i+1);d.children[1].textContent=hm(r.t);d.children[1].title=r.t;
+    d.children[2].src=r.sub?window.DZCPortrait(r.sub):'';if(!r.sub)d.children[2].style.visibility='hidden';
+    d.querySelector('.ql b').textContent=r.label;d.querySelector('.ql small').textContent=r.code;
+    const t=TAG[r.tag];const tg=d.children[4];tg.textContent=r.tag;tg.style.background=t[0];tg.style.color=t[1];tg.style.borderColor=t[2];
+    d.setAttribute('aria-label',r.label+' '+r.tag);
     d.onclick=()=>{SFX.click();if(r.kind==='h')openRecord(r.ref);else if(r.kind==='u')openUpcoming(r.idx);else openDoc(1);};
     q.appendChild(d);});
   $('qWait').textContent=cnt.wait;$('cQueue').textContent=cnt.wait;
@@ -405,7 +406,7 @@ setInterval(()=>{
   if(testDone&&!busy&&!paused&&!modalOpen){decision--;if(decision===10){toast('KARAR İÇİN 10 SANİYE',C.am);SFX.err();}if(decision<=0){act('H',true);}}
   $('timer').textContent=testDone?('00:'+pad(Math.max(0,decision))+' / 00:30'):'— / 00:30';
   $('timer').style.color=testDone&&decision<=10?C.rd:'';
-  const q=document.querySelector('.qrow.cur span:nth-child(2)');if(q&&!busy)q.textContent=clockStr();
+  const q=document.querySelector('.qrow.cur .qt');if(q&&!busy)q.textContent=clockStr().slice(0,5);
 },1000);
 setInterval(()=>{
   if(!cur||paused)return;
