@@ -84,3 +84,113 @@ button.doc:hover{transform:translateY(-1px)}
 @media (orientation:portrait){#rot.on{display:flex}}
 .btn.locked{opacity:.4;cursor:not-allowed;filter:none}
 .qav{width:18px;height:18px;border-radius:50%;object-fit:cover;vertical-align:-4px;margin-right:7px;border:1px solid var(--line)}
+
+/* =====================================================
+   MOBİL DÜZEN  (html.mob — app.js genişliğe göre ekler)
+   ===================================================== */
+html.mob,html.mob body{overflow:auto;height:auto;background:var(--bg)}
+html.mob #fit{position:static;display:block}
+html.mob #stage{width:100%;height:auto;min-height:100vh;min-height:100dvh;transform:none!important;overflow:visible;padding-bottom:calc(150px + env(safe-area-inset-bottom))}
+html.mob .ctl,html.mob .btn,html.mob button.qrow,html.mob button.zone{touch-action:manipulation}
+
+/* başlık */
+html.mob header{height:auto;grid-template-columns:1fr auto;border-bottom-width:1px}
+html.mob .hLogo{padding:10px 14px;gap:10px;border-right:none;min-width:0}
+html.mob .hLogo>div:first-child{font-size:24px!important}
+html.mob .hLogo .disp{font-size:11px!important;letter-spacing:.5px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.mob .hLogo .mono{font-size:9px!important;letter-spacing:1px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.mob .hLogo>div:last-child{min-width:0}
+html.mob .hClock{padding:10px 14px;gap:8px;border-left:none}
+html.mob .hClock .mono{display:none}
+html.mob #clock{font-size:34px!important}
+html.mob .hChips{grid-column:1/-1;order:3;overflow-x:auto;border-top:1px solid var(--line);padding:8px 0;font-size:10px!important;scrollbar-width:none}
+html.mob .hChips::-webkit-scrollbar{display:none}
+html.mob .chip{padding:0 12px;flex:none}
+
+/* mikro şerit + kontroller */
+html.mob .mstrip{height:auto;flex-wrap:wrap;padding:0;gap:0}
+html.mob .mstrip>span{display:none}
+html.mob #ctls{position:static;width:100%;background:none;padding:8px 10px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+html.mob .ctl{height:36px;padding:0 4px;font-size:10px;letter-spacing:.8px}
+html.mob .ctl .mu{display:none}
+html.mob #pauseBar{position:fixed;top:0;height:32px;font-size:10px;letter-spacing:1.5px;padding:0 10px;text-align:center}
+
+/* ana ızgara → tek kolon */
+html.mob main{display:flex;flex-direction:column}
+html.mob main>section{border:none!important;border-top:1px solid var(--line)!important;padding:14px!important;gap:12px!important}
+html.mob #center{order:1;border-top:none!important}
+html.mob .sec01{order:2}
+html.mob .sec03{order:3}
+html.mob .secH{flex-wrap:wrap;gap:4px 10px}
+html.mob .secT{font-size:15px}
+html.mob .secS{font-size:9.5px}
+
+/* 02 test */
+html.mob .stRow{flex-direction:column;gap:10px}
+html.mob #dev{font-size:76px!important}
+html.mob .stCol{width:100%!important}
+html.mob #stBox{flex-direction:row!important;align-items:center;gap:10px}
+html.mob #stBox>div{flex-direction:column;align-items:flex-start!important;gap:2px}
+html.mob #stTxt{font-size:40px!important}
+html.mob .waveBox{height:130px!important}
+html.mob .metrics{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+html.mob .metric .v{font-size:28px}
+html.mob .uyRow{flex-direction:column}
+html.mob .latBox{width:auto!important;flex-direction:row!important;justify-content:space-between;align-items:center}
+html.mob #uyT{font-size:16px!important;letter-spacing:1px!important}
+html.mob #steps{grid-template-columns:repeat(4,minmax(0,1fr))!important;row-gap:8px!important}
+html.mob #docs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+html.mob #stamp{transform:translate(-50%,-50%) rotate(-8deg) scale(.6);top:30%}
+html.mob #stamp.show{transform:translate(-50%,-50%) rotate(-8deg) scale(.7)}
+
+/* 01 kimlik */
+html.mob .sec01>div:nth-child(2){height:150px!important}
+html.mob #sig{left:172px!important;font-size:40px!important}
+html.mob #mrz{font-size:10.5px!important;letter-spacing:.6px!important;overflow-x:auto}
+html.mob #zones{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+html.mob .zone{padding:8px 0 7px}
+html.mob .sec01>div:nth-child(4){flex-direction:column;align-items:flex-start!important;gap:8px!important}
+
+/* 03-05 */
+html.mob #queue .qrow{padding:9px 0;grid-template-columns:20px 56px minmax(0,1fr) 78px}
+html.mob #logs{height:300px;flex:none!important;overflow-y:auto!important;justify-content:flex-start!important}
+
+/* çok dilli uyarı → yatay kaydırmalı */
+html.mob #warnband{display:flex!important;height:auto!important;overflow-x:auto;scroll-snap-type:x mandatory}
+html.mob #warnband>div{flex:none;width:78vw;max-width:340px;scroll-snap-align:start;padding:12px 14px}
+html.mob #warnband>div:first-child{width:96px;padding:12px 0}
+
+/* karar çubuğu → altta sabit */
+html.mob .actBar{position:fixed;left:0;right:0;bottom:0;z-index:60;height:auto!important;flex-direction:column;align-items:stretch!important;gap:8px!important;padding:8px 10px calc(8px + env(safe-area-inset-bottom))!important;background:rgba(8,9,11,.96);border-top:2px solid var(--st);backdrop-filter:blur(6px)}
+html.mob .actInfo{gap:12px!important;justify-content:space-between;font-size:9px!important}
+html.mob .actInfo>div:first-child,html.mob .kbd{display:none!important}
+html.mob .actInfo span[id]{font-size:12px!important}
+html.mob .actBtns{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))}
+html.mob .actBtns .btn{height:48px;padding:0 6px;font-size:15px;letter-spacing:.5px}
+html.mob .actBtns .btn small{display:none}
+html.mob footer{height:auto!important;padding:8px 14px!important;white-space:normal!important;flex-wrap:wrap;gap:4px 10px!important;font-size:9px!important}
+
+/* katmanlar */
+html.mob #overlay,html.mob #boot{position:fixed}
+html.mob #overlay{align-items:flex-end;z-index:80}
+html.mob .modal{width:100%;max-height:88vh;max-height:88dvh;border-left:none;border-right:none;border-bottom:none;animation:sheet .22s ease-out}
+@keyframes sheet{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+html.mob .modal .mh{padding:12px 14px}
+html.mob #mTitle{font-size:17px!important}
+html.mob #mJp{display:none}
+html.mob .modal .mb{padding:14px;gap:12px}
+html.mob .modal .mf{padding:10px 14px calc(10px + env(safe-area-inset-bottom));flex-wrap:wrap}
+html.mob .modal .mf .btn{flex:1 1 140px;height:48px;font-size:14px}
+html.mob .modal .mf .btn small{display:none}
+html.mob .kv{grid-template-columns:1fr}
+html.mob .band{padding:10px 12px}
+html.mob .band span{font-size:20px!important}
+html.mob #toast{position:fixed;bottom:calc(150px + env(safe-area-inset-bottom));width:max-content;max-width:calc(100vw - 24px);font-size:12px;padding:10px 14px}
+html.mob #boot{padding:24px 16px;gap:12px;text-align:center}
+html.mob #boot>div:first-child{font-size:56px!important}
+html.mob #boot .disp{font-size:13px!important;letter-spacing:1.5px!important}
+html.mob #bootLog{width:100%!important;height:auto!important;min-height:170px;font-size:10px!important;text-align:left}
+html.mob #bootBtn{width:100%;height:56px!important;font-size:16px!important;padding:0 10px!important}
+html.mob #bootBtn small{display:none}
+html.mob #boot>div:last-child{font-size:9px!important;letter-spacing:1px!important}
+html.mob #rot{display:none!important}

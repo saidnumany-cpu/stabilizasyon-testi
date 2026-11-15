@@ -11,12 +11,14 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 
 /* ================= ekrana sığdır ================= */
 function fit(){
+  const mob=innerWidth<900||(innerWidth<innerHeight&&innerWidth<1100);
+  document.documentElement.classList.toggle('mob',mob);
+  if(mob){$('stage').style.transform='';return;}
   const s=Math.min(innerWidth/1920,innerHeight/1080);
   $('stage').style.transform='scale('+s+')';
-  $('rot').classList.toggle('on',innerHeight>innerWidth&&!rotDismissed);
 }
 let rotDismissed=false;
-$('rotX').onclick=()=>{rotDismissed=true;fit();};
+$('rotX').onclick=()=>{rotDismissed=true;$('rot').style.display='none';};
 addEventListener('resize',fit);fit();
 
 /* ================= ses ================= */
@@ -105,7 +107,7 @@ function log(lv,msg){
   const el=document.createElement('div');el.className='logl new';
   el.innerHTML='<span class="mu"></span><span></span><span></span>';
   el.children[0].textContent=clockStr();el.children[1].textContent=lv;el.children[1].style.color=LV[lv];el.children[2].textContent=msg;el.title=msg;
-  const box=$('logs');box.appendChild(el);while(box.children.length>16)box.removeChild(box.firstChild);
+  const box=$('logs');box.appendChild(el);while(box.children.length>(document.documentElement.classList.contains('mob')?30:16))box.removeChild(box.firstChild);box.scrollTop=box.scrollHeight;
 }
 let toastT=null;
 function toast(msg,col){
