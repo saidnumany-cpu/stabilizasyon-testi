@@ -7,7 +7,7 @@
 <meta name="description" content="2099 Sistem Evreni — DZC-81 Geçiş ve Kontrol Düğümü denetim terminali. Said Numan Yücel, Yazı ve Tipografi.">
 <meta name="theme-color" content="#08090B">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Audiowide&family=Tektur:wdth,wght@75..100,400..900&family=Chakra+Petch:wght@400;500;600;700&family=Kode+Mono:wght@400..700&family=VT323&family=M+PLUS+1+Code:wght@400;700&family=Sedgwick+Ave&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="style.css?v=15">
+<link rel="stylesheet" href="style.css?v=16">
 </head>
 <body>
 <div id="fit"><div id="stage">
@@ -17,15 +17,15 @@
     <div style="font-family:'Audiowide',sans-serif;font-weight:400;font-size:30px;line-height:1;letter-spacing:0;white-space:nowrap;flex:none;text-shadow:0 0 14px rgba(92,207,224,.35)">DZC-81</div>
     <div style="display:flex;flex-direction:column;gap:3px">
       <div class="disp" style="font-weight:700;font-size:16px;letter-spacing:1px">MERKEZİ DENETİM VE KONTROL BAŞKANLIĞI</div>
-      <div class="mono mu" style="font-size:11px;letter-spacing:2px">GEÇİŞ VE KONTROL DÜĞÜMÜ · <span class="jp" style="letter-spacing:1px">中央通過管理</span> · IST-34 ⇄ ANK-06</div>
+      <div class="mono mu" style="font-size:11px;letter-spacing:2px">GEÇİŞ VE KONTROL DÜĞÜMÜ · <span class="jp" style="letter-spacing:1px">中央通過管理</span></div>
     </div>
   </div>
   <div class="mono hChips" style="display:flex;align-items:center;font-size:12px;letter-spacing:1px">
     <div class="chip"><span class="mu">TERMİNAL</span><span>T-07 / ŞERİT B</span></div>
     <div class="chip"><span class="mu">VARDİYA</span><span>III · 14:00–22:00</span></div>
-    <div class="chip"><span class="mu">GÖREVLİ</span><span>DNT-2207 · ÇELİK, O.</span></div>
-    <div class="chip"><span class="mu">SEKTÖR TARAMASI</span><span style="color:var(--or)">POZİTİF</span></div>
-    <div class="chip" style="border:none"><span class="mu">AĞ</span><span>TRANS-METRO ORBİTAL · ŞİFRELİ</span></div>
+    <div class="chip"><span class="mu">GÖREVLİ</span><span>DNT-2207 · ÇELİK</span></div>
+    <div class="chip"><span class="mu">TARAMA</span><span style="color:var(--or)">POZİTİF</span></div>
+    <div class="chip" style="border:none"><span class="mu">AĞ</span><span>ORBİTAL · ŞİFRELİ</span></div>
   </div>
   <div class="hClock" style="display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:0 24px;border-left:1px solid var(--line)">
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
@@ -188,16 +188,16 @@
       <button type="button" class="rb nxImg" id="nxImg" aria-label="Nexus-X ürün görselini aç"><img src="assets/nexus-x.png" alt="Nexus-X nöro stabilizatör kutusu ve şişesi"><span class="mono">ÜRÜN · DZ-99</span></button>
       <div style="flex:1;min-width:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px;align-content:start">
         <div style="display:flex;flex-direction:column;gap:1px"><span class="lbl" style="font-size:9.5px">PROTOKOL</span><span id="nxProto" style="font-size:12.5px;font-weight:700">—</span></div>
-        <div style="display:flex;flex-direction:column;gap:1px"><span class="lbl" style="font-size:9.5px">HASAT KODU</span><span style="font-size:12.5px;font-weight:600">DZ-99 · NÖRO STABİLİZATÖR</span></div>
-        <div style="display:flex;flex-direction:column;gap:1px"><span class="lbl" style="font-size:9.5px">SENTETİK TAKVİYE</span><span id="nxLast" style="font-size:12.5px;font-weight:600">AKTİF · SON 2099.10.02</span></div>
-        <button type="button" class="rb sxBtn" id="sxBtn" aria-label="SYNTEX-81 rasyonunu aç"><img src="assets/syntex-81.png" alt=""><span style="display:flex;flex-direction:column;gap:1px;min-width:0"><span class="lbl" style="font-size:9.5px">SYNTEX-81 RASYON</span><span id="nxRat" style="font-size:12.5px;font-weight:600">3/3 BLOK · PROTEİN %88,4</span></span></button>
+        <div style="display:flex;flex-direction:column;gap:1px"><span class="lbl" style="font-size:9.5px">HASAT KODU</span><span class="nv" style="font-size:12.5px;font-weight:600">DZ-99</span></div>
+        <div style="display:flex;flex-direction:column;gap:1px"><span class="lbl" style="font-size:9.5px">SENTETİK TAKVİYE</span><span id="nxLast" class="nv" style="font-size:12.5px;font-weight:600">AKTİF · 2099.10.02</span></div>
+        <button type="button" class="rb sxBtn" id="sxBtn" aria-label="SYNTEX-81 rasyonunu aç"><img src="assets/syntex-81.png" alt=""><span style="display:flex;flex-direction:column;gap:1px;min-width:0"><span class="lbl nv" style="font-size:9.5px">SYNTEX-81</span><span id="nxRat" class="nv" style="font-size:12.5px;font-weight:600">3/3 · %88,4</span></span></button>
         <div style="grid-column:span 2;display:flex;flex-direction:column;gap:3px">
           <div class="lbl" style="display:flex;justify-content:space-between;font-size:9.5px"><span>DOZAJ YÜKÜ</span><span id="nxLoadT">8%</span></div>
           <div style="height:6px;background:#1A1D22"><div id="nxLoad" style="height:6px;width:8%;background:var(--pk);box-shadow:0 0 8px var(--pk);transition:width .6s"></div></div>
         </div>
       </div>
       </div>
-      <div class="mono mu" style="border-top:1px solid var(--line);padding:4px 12px;font-size:9px;letter-spacing:1px">☢ RADYOAKTİF YAN ETKİSİ OLABİLEN TIBBİ İLAÇ · TEMEL ÇİZGİ TESTİ ÖNCESİ KULLANIM İÇİNDİR</div>
+      <div class="mono mu" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:1px solid var(--line);padding:4px 12px;font-size:9px;letter-spacing:1px">☢ RADYOAKTİF YAN ETKİ · TEMEL ÇİZGİ TESTİ ÖNCESİ KULLANIM</div>
     </div>
 
     <div class="secH" style="margin-top:2px"><div class="secT"><span class="mu">05</span> — ALTYAPI KAYITLARI</div><div class="secS">CANLI · SALT OKUNUR</div></div>
@@ -256,7 +256,7 @@
 </div></div>
 <div id="rot" class="mono">Bu terminal yatay geniş ekran için tasarlandı. En iyi deneyim için cihazını yatay çevir ya da masaüstünde aç. <button type="button" id="rotX">TAMAM</button></div>
 
-<script src="portrait.js?v=15"></script>
-<script src="app.js?v=15"></script>
+<script src="portrait.js?v=16"></script>
+<script src="app.js?v=16"></script>
 </body>
 </html>

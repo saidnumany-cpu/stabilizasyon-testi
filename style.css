@@ -298,3 +298,13 @@ html.light .btn{box-shadow:0 1px 0 rgba(0,0,0,.08)}
 html.light .btn:hover{filter:brightness(.92)}
 html.light .btn.locked{box-shadow:none}
 html.light #bootBtn:disabled{opacity:.45}
+/* başlık ve panel taşmaları */
+.chip>span{white-space:nowrap}
+.hLogo .mono{white-space:nowrap}
+.nv{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.sxBtn>span{min-width:0}
+.waveBox>div:nth-of-type(2){right:auto!important;left:50%}
+@media print{
+  #stage,#boot{background-image:none!important}
+  .mstrip{overflow:hidden!important}
+}

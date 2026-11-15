@@ -220,7 +220,7 @@ function renderSteps(){
   STEPS.forEach((t,i)=>{const d=document.createElement('div');d.className='step'+(i<step?' done':i===step?' on':'');d.innerHTML='<span class="mono" style="font-size:10px;letter-spacing:1px"></span><span></span>';d.children[0].textContent=pad(i+1);d.children[1].textContent=t;b.appendChild(d);});
   $('cyc').textContent=Math.min(step+1,7);
 }
-function renderNexus(){$('nxLoad').style.width=nexusLoad+'%';$('nxLoadT').textContent=nexusLoad+'%';$('nxRat').textContent=cur.rations+'/3 BLOK · PROTEİN %88,4';}
+function renderNexus(){$('nxLoad').style.width=nexusLoad+'%';$('nxLoadT').textContent=nexusLoad+'%';$('nxRat').textContent=cur.rations+'/3 · %88,4';}
 function renderCounts(){$('cPass').textContent=cnt.pass.toLocaleString('tr-TR');$('cRet').textContent=cnt.ret;$('cHold').textContent=cnt.hold;$('cNx').textContent=cnt.nx;$('qWait').textContent=cnt.wait;$('cQueue').textContent=cnt.wait;}
 
 /* ================= modal ================= */
@@ -314,7 +314,7 @@ function openHelp(){
 function loadNext(){
   cur=upcoming.shift();upcoming.push(gen());
   devTarget=cur.dev;devShown=0;step=0;testDone=false;decision=30;nexusLoad=cur.nx;nxApplied=0;busy=false;lastAlarmFor=null;
-  $('uyT').textContent=pick(UYARAN);$('nxLast').textContent='AKTİF · SON 2099.10.02';
+  $('uyT').textContent=pick(UYARAN);$('nxLast').textContent='AKTİF · 2099.10.02';
   renderId();renderQueue();renderSteps();renderNexus();paintStatus();
   log('SYS','R-2: '+cur.id+' çip oturumu açıldı (AES-256)');SFX.step();
 }
@@ -368,7 +368,7 @@ function act(k,auto){
   }else if(k==='N'){press('bN');
     if(nexusLoad>=100){log('ERR','Nexus-X doz sınırı aşıldı · uygulama reddedildi');toast('DOZ SINIRI AŞILDI · UYGULAMA REDDEDİLDİ',C.rd);SFX.err();return;}
     nexusLoad=Math.min(100,nexusLoad+34);nxApplied++;cnt.nx++;devTarget=Math.max(.0018,devTarget*.32);
-    $('nxLast').textContent='AKTİF · SON 2099.11.15';
+    $('nxLast').textContent='AKTİF · 2099.11.15';
     log('NXS','Nexus-X DZ-99 · 1 birim uygulandı · tekrar test');SFX.nexus();
     const f=$('pkflash');f.style.transition='none';f.style.opacity=.35;requestAnimationFrame(()=>{f.style.transition='opacity .8s';f.style.opacity=0;});
     step=2;testDone=false;decision=30;renderSteps();renderNexus();renderCounts();paintStatus();
@@ -378,7 +378,7 @@ function act(k,auto){
 $('bA').onclick=()=>act('A');$('bH').onclick=()=>act('H');$('bN').onclick=()=>act('N');$('bR').onclick=()=>act('R');
 
 /* ================= kontroller ================= */
-function setPause(v){paused=v;$('stage').classList.toggle('paused',v);$('cPause').setAttribute('aria-pressed',String(v));$('cPause').firstChild.textContent=v?'SÜRDÜR ':'DURAKLAT ';log('SYS',v?'Test görevli tarafından duraklatıldı':'Test sürdürüldü');}
+function setPause(v,silent){paused=v;$('stage').classList.toggle('paused',v);$('cPause').setAttribute('aria-pressed',String(v));$('cPause').firstChild.textContent=v?'SÜRDÜR ':'DURAKLAT ';if(!silent)log('SYS',v?'Test görevli tarafından duraklatıldı':'Test sürdürüldü');}
 function setSound(v){soundOn=v;$('cSound').setAttribute('aria-pressed',String(v));$('cSound').firstChild.textContent=v?'SES: AÇIK ':'SES: KAPALI ';if(v)SFX.click();}
 $('cPause').onclick=()=>{SFX.click();setPause(!paused);};
 function applyTheme(t,quiet){
@@ -394,11 +394,11 @@ function applyTheme(t,quiet){
 }
 $('cTheme').onclick=()=>applyTheme(theme==='light'?'dark':'light');
 $('bootTheme').onclick=()=>applyTheme(theme==='light'?'dark':'light');
-function doPrint(){SFX.click();const wasPaused=paused;if(started&&!paused)setPause(true);
-  setTimeout(()=>{try{window.print();}catch(e){toast('YAZDIRMA BU GÖRÜNÜMDE DESTEKLENMİYOR');}if(started&&!wasPaused)setPause(false);},80);}
+function doPrint(){SFX.click();setTimeout(()=>{try{window.print();}catch(e){toast('YAZDIRMA BU GÖRÜNÜMDE DESTEKLENMİYOR');}},60);}
+let resumeAfterPrint=false;
 $('cPrint').onclick=doPrint;
-addEventListener('beforeprint',()=>{document.documentElement.classList.remove('mob');document.documentElement.classList.add('printing');});
-addEventListener('afterprint',()=>{document.documentElement.classList.remove('printing');fit();});
+addEventListener('beforeprint',()=>{if(started&&!paused){setPause(true,true);resumeAfterPrint=true;}if(modalOpen)closeModal();document.documentElement.classList.remove('mob');document.documentElement.classList.add('printing');});
+addEventListener('afterprint',()=>{document.documentElement.classList.remove('printing');fit();if(resumeAfterPrint){resumeAfterPrint=false;setPause(false,true);}});
 $('cSound').onclick=()=>setSound(!soundOn);
 $('cHelp').onclick=()=>{SFX.click();openHelp();};
 $('nxImg').onclick=()=>{if(!started)return;SFX.click();openDoc(2);};
