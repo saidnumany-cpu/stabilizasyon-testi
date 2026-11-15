@@ -2,7 +2,7 @@
    Her kimlik kodundan (seed) tekrar etmeyen, monokrom bir vesikalık üretir. */
 (function(){
 'use strict';
-const FEMALE=new Set(['DEFNE','MERVE','ELİF','İLKİM','SELİN','ZEYNEP','AYLİN','NAZ','ECE','DERİN']);
+const FEMALE=new Set(['SERRA','DEFNE','MERVE','ELİF','İLKİM','SELİN','ZEYNEP','AYLİN','NAZ','ECE','DERİN']);
 const cache=new Map();
 
 function hashStr(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;}

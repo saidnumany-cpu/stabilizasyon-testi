@@ -100,9 +100,30 @@ const ARAS={id:'DZC-8109-AKV',name:'ARAS KAAN VARDAR',short:'VARDAR, ARAS K.',gi
   mrz:'IDDZC81<<ARAS<KAAN<VARDAR<<<<<<<<<<<<<<<<<<\nDZ8109AKV9TUR20991104M21011103<<<<<<<<<<<<06',nx:8,rations:3};
 const YUCEL={id:'DZC-2408-SNY',name:'SAİD NUMAN YÜCEL',given:'SAİD NUMAN',sur:'YÜCEL',short:'YÜCEL, SAİD N.',dept:'YOLCU · MERKEZİ TRANSİT',route:['IST-34','DZC-81'],dep:'17.50',arr:'18.20',fields:[['YETKİ DÜZEYİ','SEVİYE 2 · YOLCU']]};
 
-let upcoming=[ARAS,gen(),gen(),gen()];
+/* ---- isimli personel ---- */
+function named(full,o){
+  const b=gen();const parts=full.split(' ');const sur=parts.pop();const given=parts.join(' ');
+  const ini=TR2A(parts.map(p=>p[0]).join('')+sur[0]).slice(0,3).padEnd(3,'X');
+  const id='DZC-'+o.num+'-'+ini;
+  const fields=b.fields.slice();fields[0]=['GÖREV',o.gorev];fields[1]=['YETKİ DÜZEYİ',o.yetki];
+  return Object.assign(b,{id,name:full,given,sur,short:sur+', '+parts[0]+(parts[1]?' '+parts[1][0]+'.':''),dept:o.dept,fields,
+    dev:o.dev,route:o.route,dep:o.dep||b.dep,arr:o.arr||b.arr,zones:o.zones||b.zones,
+    mrz:mkMrz(given,sur,id,'20991104M21011103'),nx:o.nx==null?b.nx:o.nx,rations:o.rations||3,named:true});
+}
+const NAMED={
+  SERRA:named('SERRA KIZILTAŞ',{num:'0001',dept:'DZC-81 MERKEZİ DENETİM KURULU',gorev:'BAŞ DENETÇİ / DANIŞMAN',yetki:'SEVİYE 5 · TAM YETKİ',dev:.0042,route:['ANK-06','IST-34'],zones:[1,1,1,1,1,1,1,1],nx:0}),
+  SAID:named('SAİD NUMAN YÜCEL',{num:'2408',dept:'SİSTEM GÖRSEL KİMLİK BİRİMİ',gorev:'TASARIMCI / FAZ-3',yetki:'SEVİYE 2 · YOLCU',dev:.0041,route:['IST-34','ANK-06'],dep:'17.50',arr:'18.20'}),
+  FURKAN:named('FURKAN YÜCEL',{num:'2411',dept:'TRANS-METRO ORBİTAL BAKIM',gorev:'HAT TEKNİSYENİ / FAZ-2',yetki:'SEVİYE 3 · ORBİTAL HAT',dev:.0284,route:['IST-34','ERM-25'],zones:[1,-1,1,-1,0,1,-1,-1]}),
+  YAKUP:named('YAKUP SAFA GÜNEŞ',{num:'3127',dept:'ENERJİ ÜRETİM SEKTÖRÜ',gorev:'ŞEBEKE OPERATÖRÜ / FAZ-2',yetki:'SEVİYE 3 · ENERJİ',dev:.0112,route:['BTM-72','ANK-06']}),
+  EMIRHAN:named('EMİRHAN DURNA',{num:'4410',dept:'SENTETİK TARIM KOMPLEKSİ',gorev:'HASAT DENETÇİSİ / FAZ-1',yetki:'SEVİYE 2 · ÜRETİM',dev:.0331,route:['KON-42','IST-34'],zones:[1,-1,1,1,-1,0,-1,-1],rations:2}),
+  TARIK:named('TARIK BAYRAK',{num:'5530',dept:'LİMAN VE LOJİSTİK SEKTÖRÜ',gorev:'KONTEYNER KOORDİNATÖRÜ',yetki:'SEVİYE 3 · LİMAN',dev:.0094,route:['IZM-35','ANK-06']}),
+  ILKER:named('İLKER ATA ÇELİKGİL',{num:'6602',dept:'SİSMİK KALİBRASYON VE ALTYAPI DENETİMİ',gorev:'ALTYAPI MÜHENDİSİ / FAZ-2',yetki:'SEVİYE 4 · KISITLI BÖLGE',dev:.0243,route:['ANK-06','TRB-61'],zones:[1,0,1,0,1,1,-1,-1]}),
+  ALMEDIN:named('ALMEDİN MESIC',{num:'7781',dept:'ARŞİV VE KAYIT BİRİMİ',gorev:'VERİ ARŞİVCİSİ / FAZ-2',yetki:'SEVİYE 3 · ARŞİV',dev:.0153,route:['EDR-22','ANK-06'],zones:[0,0,1,-1,-1,-1,1,-1]})
+};
+NAMED.SAID.photo=false;
+let upcoming=[ARAS,NAMED.SERRA,gen(),NAMED.FURKAN,NAMED.YAKUP,gen(),NAMED.EMIRHAN,NAMED.TARIK,gen(),NAMED.ILKER,NAMED.ALMEDIN,gen()];
 let history=[
-  {t:'17:46:12',s:YUCEL,label:'YÜCEL, SAİD N. · IST-34',tag:'GEÇTİ',dev:.0041},
+  {t:'17:46:12',s:NAMED.SAID,label:'YÜCEL, SAİD N. · IST-34',tag:'GEÇTİ',dev:.0041},
   ...[['17:47:40','RET',.0712],['17:48:18','NEXUS-X',.0288],['17:48:55','BEKLET',.0235]].map(([t,tag,dev])=>{const g=gen();return{t,s:g,label:g.short+' · '+g.id.slice(0,8),tag,dev};})];
 let cnt={pass:1207,ret:38,hold:61,nx:23,wait:14};
 let cur=null,devTarget=0,devShown=0,step=0,testDone=false,decision=30,nexusLoad=0,busy=false,nxApplied=0,phase=0,paused=false,started=false,modalOpen=false,modalPrimary=null,lastAlarmFor=null;
