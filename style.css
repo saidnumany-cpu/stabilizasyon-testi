@@ -83,3 +83,4 @@ button.doc:hover{transform:translateY(-1px)}
 #rot button{font:inherit;background:#5CCFE0;color:#08090B;border:0;padding:8px 12px;cursor:pointer}
 @media (orientation:portrait){#rot.on{display:flex}}
 .btn.locked{opacity:.4;cursor:not-allowed;filter:none}
+.qav{width:18px;height:18px;border-radius:50%;object-fit:cover;vertical-align:-4px;margin-right:7px;border:1px solid var(--line)}

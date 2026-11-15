@@ -90,14 +90,12 @@ const ARAS={id:'DZC-8109-AKV',name:'ARAS KAAN VARDAR',short:'VARDAR, ARAS K.',gi
   fields:[['GÖREV','BAŞ TEKNİKER / FAZ-2'],['YETKİ DÜZEYİ','SEVİYE 4 · KISITLI BÖLGE'],['KAN GRUBU','0 Rh+'],['SENTETİK TAKVİYE','AKTİF'],['SİSTEM SERİ NO','SYS-8489-ARV-990'],['GEÇERLİLİK','2099.11.04 – 2101.11.03']],
   zones:[1,-1,1,0,1,1,-1,-1],dev:.0362,face:97.2,route:['IST-34','ANK-06'],dep:'17.50',arr:'18.20',
   mrz:'IDDZC81<<ARAS<KAAN<VARDAR<<<<<<<<<<<<<<<<<<\nDZ8109AKV9TUR20991104M21011103<<<<<<<<<<<<06',nx:8,rations:3};
-const YUCEL={id:'DZC-2408-SNY',name:'SAİD NUMAN YÜCEL',short:'YÜCEL, SAİD N.',dept:'YOLCU · MERKEZİ TRANSİT',route:['IST-34','DZC-81'],dep:'17.50',arr:'18.20',fields:[['YETKİ DÜZEYİ','SEVİYE 2 · YOLCU']]};
+const YUCEL={id:'DZC-2408-SNY',name:'SAİD NUMAN YÜCEL',given:'SAİD NUMAN',sur:'YÜCEL',short:'YÜCEL, SAİD N.',dept:'YOLCU · MERKEZİ TRANSİT',route:['IST-34','DZC-81'],dep:'17.50',arr:'18.20',fields:[['YETKİ DÜZEYİ','SEVİYE 2 · YOLCU']]};
 
 let upcoming=[ARAS,gen(),gen(),gen()];
 let history=[
   {t:'17:46:12',s:YUCEL,label:'YÜCEL, SAİD N. · IST-34',tag:'GEÇTİ',dev:.0041},
-  {t:'17:47:40',s:null,label:'DZC-0377-1983-C',tag:'RET',dev:.0712},
-  {t:'17:48:18',s:null,label:'DZC-0102-6625-B',tag:'NEXUS-X',dev:.0288},
-  {t:'17:48:55',s:null,label:'DZC-0640-0071-C',tag:'BEKLET',dev:.0235}];
+  ...[['17:47:40','RET',.0712],['17:48:18','NEXUS-X',.0288],['17:48:55','BEKLET',.0235]].map(([t,tag,dev])=>{const g=gen();return{t,s:g,label:g.short+' · '+g.id.slice(0,8),tag,dev};})];
 let cnt={pass:1207,ret:38,hold:61,nx:23,wait:14};
 let cur=null,devTarget=0,devShown=0,step=0,testDone=false,decision=30,nexusLoad=0,busy=false,nxApplied=0,phase=0,paused=false,started=false,modalOpen=false,modalPrimary=null,lastAlarmFor=null;
 
@@ -146,7 +144,7 @@ function paintStatus(){
 function renderId(){
   $('name').textContent=cur.name;$('pid').textContent=cur.id;$('dept').textContent=cur.dept;
   $('face').textContent=fmt(cur.face,1);
-  $('photo').style.display=cur.photo?'block':'none';$('silh').style.display=cur.photo?'none':'block';
+  $('photo').src=window.DZCPortrait(cur);$('photo').alt=cur.name+' vesikalık';$('photo').style.display='block';$('silh').style.display='none';
   $('sig').textContent=cur.photo?'Arv':cur.sur.charAt(0)+cur.sur.slice(1,3).toLocaleLowerCase('tr');
   $('fields').innerHTML='';
   cur.fields.forEach(([k,v])=>{const d=document.createElement('div');d.className='field';d.innerHTML='<span class="k"></span><span class="v"></span>';d.children[0].textContent=k;d.children[1].textContent=v;$('fields').appendChild(d);});
@@ -170,12 +168,15 @@ function renderZones(){
 const TAG={'GEÇTİ':['transparent',C.cy,C.cy],'BEKLET':['transparent',C.am,C.am],'NEXUS-X':['transparent',C.pk,C.pk],'RET':[C.rd,C.bg,C.rd],'SIRADA':['transparent',C.mu,C.line],'İŞLEMDE':[C.fg,C.bg,C.fg]};
 function renderQueue(){
   const rows=history.slice(-4).map(h=>({t:h.t,label:h.label,tag:h.tag,kind:'h',ref:h}));
-  rows.push({t:clockStr(),label:cur.short+' · '+cur.id.slice(0,8),tag:'İŞLEMDE',kind:'c'});
-  upcoming.slice(0,2).forEach((u,i)=>rows.push({t:'—',label:u.id,tag:'SIRADA',kind:'u',idx:i}));
+  rows.forEach((r)=>r.sub=r.ref&&r.ref.s);
+  rows.push({t:clockStr(),label:cur.short+' · '+cur.id.slice(0,8),tag:'İŞLEMDE',kind:'c',sub:cur});
+  upcoming.slice(0,2).forEach((u,i)=>rows.push({t:'—',label:u.id,tag:'SIRADA',kind:'u',idx:i,sub:u}));
   const q=$('queue');q.innerHTML='';
   rows.forEach((r,i)=>{const d=document.createElement('button');d.type='button';d.className='rb qrow'+(r.kind==='c'?' cur':'');
     d.innerHTML='<span class="mono mu"></span><span class="mono"></span><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:500"></span><span class="tag"></span>';
-    d.children[0].textContent=pad(i+1);d.children[1].textContent=r.t;d.children[2].textContent=r.label;
+    d.children[0].textContent=pad(i+1);d.children[1].textContent=r.t;
+    if(r.sub){const im=document.createElement('img');im.src=window.DZCPortrait(r.sub);im.alt='';im.className='qav';d.children[2].appendChild(im);}
+    d.children[2].appendChild(document.createTextNode(r.label));
     const t=TAG[r.tag];d.children[3].textContent=r.tag;d.children[3].style.background=t[0];d.children[3].style.color=t[1];d.children[3].style.borderColor=t[2];
     d.onclick=()=>{SFX.click();if(r.kind==='h')openRecord(r.ref);else if(r.kind==='u')openUpcoming(r.idx);else openDoc(1);};
     q.appendChild(d);});
@@ -245,7 +246,7 @@ function openDoc(i){
       [{label:'KAPAT',kind:'ghost'},{label:'SEFERİ YENİDEN SORGULA',kind:'primary',primary:true,fn:()=>{log('OK','Sefer '+cur.dep+' '+cur.route[0]+'→DZC-81 yeniden sorgulandı · geçerli');toast('SEFER KAYDI GEÇERLİ',C.cy);SFX.ok();}}]);
   }else if(i===1){
     openModal('PERSONEL ERİŞİM KARTI','制限区域',
-      '<div style="display:flex;gap:18px;align-items:center"><div style="width:120px;height:120px;border-radius:50%;border:4px solid var(--red);overflow:hidden;flex:none;background:#1A1D22">'+(cur.photo?'<img src="assets/aras-kaan-vardar.jpg" alt="" style="width:100%;height:100%;object-fit:cover;filter:grayscale(1)">':'')+'</div><div style="display:flex;flex-direction:column;gap:4px"><span class="disp" style="font-weight:800;font-size:30px">'+esc(cur.name)+'</span><span class="mono" style="color:var(--rl);font-size:14px;letter-spacing:1.5px">PERSONEL KODU: '+esc(cur.id)+'</span><span style="font-weight:600">'+esc(cur.dept)+'</span></div></div>'+
+      '<div style="display:flex;gap:18px;align-items:center"><div style="width:120px;height:120px;border-radius:50%;border:4px solid var(--red);overflow:hidden;flex:none;background:#1A1D22">'+'<img src="'+window.DZCPortrait(cur)+'" alt="" style="width:100%;height:100%;object-fit:cover;filter:grayscale(1)">'+'</div><div style="display:flex;flex-direction:column;gap:4px"><span class="disp" style="font-weight:800;font-size:30px">'+esc(cur.name)+'</span><span class="mono" style="color:var(--rl);font-size:14px;letter-spacing:1.5px">PERSONEL KODU: '+esc(cur.id)+'</span><span style="font-weight:600">'+esc(cur.dept)+'</span></div></div>'+
       kv(cur.fields.map(f=>[f[0],f[1]]).concat([['BASELINE DURUMU',s.t+' // KALİBRASYON: '+devShown.toFixed(4),s.c],['YÜZ EŞLEŞME',fmt(cur.face,1)+'%']]))+
       '<pre class="mono" style="margin:0;background:#111318;border-left:6px solid var(--red);padding:10px 12px;font-size:14px;letter-spacing:1.3px">'+esc(cur.mrz)+'</pre>'+
       '<div class="micro">Bu kimlik kartı DZC-81 otoritesinin mülkiyetindedir. Yalnızca yetkili personelin kullanımına açıktır. Birbiriyle bağlantılı hücreler sistemi protokolü gereğince kart sahibinin zihinsel stabilizasyon ve temel çizgi testi doğrulaması periyodik olarak yapılmaktadır. İzinsiz kullanım kimliğin anında iptaline yol açar.</div>',
@@ -277,17 +278,18 @@ function openZone(i){
       setTimeout(()=>{if(Math.random()<.35&&m===0){cur.zones[i]=1;renderZones();log('OK',c+' geçici erişim onaylandı · 24 saat');toast(c+' ERİŞİMİ ONAYLANDI',C.cy);SFX.ok();}
         else{log('ERR',c+' erişim talebi reddedildi · ANK-06');toast(c+' TALEBİ REDDEDİLDİ',C.rd);SFX.bad();}},2200);}}]);
 }
+const face=(sub,col)=>sub?'<div style="display:flex;gap:18px;align-items:center"><img src="'+window.DZCPortrait(sub)+'" alt="" style="width:110px;height:110px;border-radius:50%;object-fit:cover;border:4px solid '+(col||C.red)+';flex:none"><div style="display:flex;flex-direction:column;gap:4px"><span class="disp" style="font-weight:800;font-size:26px">'+esc(sub.name)+'</span><span class="mono" style="color:var(--rl);font-size:13px;letter-spacing:1.5px">'+esc(sub.id)+'</span><span style="font-weight:600;font-size:13px">'+esc(sub.dept||'')+'</span></div></div>':'';
 function openRecord(h){
   const col=TAG[h.tag][2]===C.line?C.mu:TAG[h.tag][2];
   openModal('KARAR KAYDI · '+h.tag,'記録',
-    kv([['KİMLİK',h.label],['KARAR',h.tag,col],['ZAMAN',h.t],['BASELINE SAPMASI',h.dev.toFixed(4)],['GÖREVLİ','DNT-2207 · ÇELİK, O.'],['ARŞİV','ARŞ-0 · BLOK 448-93-11-0']])+
+    face(h.s,col)+kv([['KİMLİK',h.label],['KARAR',h.tag,col],['ZAMAN',h.t],['BASELINE SAPMASI',h.dev.toFixed(4)],['GÖREVLİ','DNT-2207 · ÇELİK, O.'],['ARŞİV','ARŞ-0 · BLOK 448-93-11-0']])+
     '<div class="micro">Bu karar düğüm arşivine kalıcı olarak yazılmıştır. Görevli kararları Merkez ANK-06 tarafından denetlenir ve geri alınamaz.</div>',
     [{label:'KAPAT',kind:'ghost'}]);
 }
 function openUpcoming(i){
   const u=upcoming[i];
   openModal('SIRADAKİ DENEK · '+u.id,'待機',
-    kv([['AD SOYAD',u.name],['DEPARTMAN',u.dept],['GÜZERGÂH',u.route[0]+' → DZC-81 → '+u.route[1]],['SEFER',u.dep+' → '+u.arr],['YETKİ',u.fields[1][1]],['ÖN TARAMA','BEKLENİYOR',C.mu]]),
+    face(u,C.mu)+kv([['AD SOYAD',u.name],['DEPARTMAN',u.dept],['GÜZERGÂH',u.route[0]+' → DZC-81 → '+u.route[1]],['SEFER',u.dep+' → '+u.arr],['YETKİ',u.fields[1][1]],['ÖN TARAMA','BEKLENİYOR',C.mu]]),
     [{label:'KAPAT',kind:'ghost'},...(i>0?[{label:'SIRADA ÖNE AL',kind:'primary',primary:true,fn:()=>{upcoming.unshift(upcoming.splice(i,1)[0]);renderQueue();log('SYS',u.id+' sırada öne alındı');toast('SIRA GÜNCELLENDİ',C.cy);SFX.click();}}]:[])]);
 }
 function openHelp(){
