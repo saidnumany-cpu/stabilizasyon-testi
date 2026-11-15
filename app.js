@@ -444,7 +444,7 @@ function startSession(){
   $('boot').classList.add('gone');setTimeout(()=>$('boot').style.display='none',600);
   [['SYS','Terminal T-07 açıldı · görevli DNT-2207'],['SYS','SYS-CHK-99.8 · Merkez ANK-06 senkron'],['OK','TRANS-METRO ORBİTAL bağlantısı · 14 ms']].forEach(l=>log(l[0],l[1]));
   loadNext();
-  setTimeout(()=>toast('KILAVUZ İÇİN [?] · KISAYOLLAR F1–F4',C.cy),900);
+  setTimeout(()=>toast(document.documentElement.classList.contains('mob')?'KARAR TUŞLARI ALTTA · KILAVUZ ÜSTTE':'KILAVUZ İÇİN [?] · KISAYOLLAR F1–F4',C.cy),900);
 }
 $('bootBtn').onclick=startSession;
 $('clock').textContent=clockStr();renderCounts();
