@@ -345,3 +345,5 @@ html.mob .secCard .disp{font-size:34px!important}
 html.mob #sig.svgsig{width:150px;height:62px;left:168px!important}
 @media (prefers-reduced-motion:reduce){.sigsvg path{animation:none;stroke-dashoffset:0}.sigsvg .sigdot{animation:none;opacity:1}}
 @media print{.sigsvg path{stroke-dashoffset:0!important;stroke-dasharray:none!important}.sigsvg .sigdot{opacity:1!important}}
+#sig.svgsig{width:212px;height:100px;top:28px!important;left:184px!important}
+html.mob #sig.svgsig{width:160px;height:84px;top:34px!important;left:166px!important}
