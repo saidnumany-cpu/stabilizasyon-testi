@@ -195,8 +195,8 @@ html.mob #bootBtn small{display:none}
 html.mob #boot>div:last-child{font-size:9px!important;letter-spacing:1px!important}
 html.mob #rot{display:none!important}
 /* mobil ince ayar */
-html.mob .hLogo>div:last-child{display:none}
-html.mob .waveBox>div:nth-of-type(2){display:none}
+html.mob .hLogo>div:last-child{display:none!important}
+html.mob .waveBox>div:nth-of-type(2){display:none!important}
 html.mob #queue .qrow{grid-template-columns:18px 66px minmax(0,1fr) 74px;gap:6px}
 html.mob .actInfo>div{min-width:0}
 html.mob #advice{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62vw}
