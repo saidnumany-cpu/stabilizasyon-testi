@@ -256,13 +256,14 @@ function openDoc(i){
   }else if(i===2){
     openModal('NEXUS-X · NÖRO STABİLİZATÖR','ネクサス-X · 合成',
       '<div class="band" style="background:var(--pk)"><span class="disp" style="font-weight:900;font-size:40px">NEXUS-X</span><span class="jp" style="font-size:34px">合成</span></div>'+
-      '<figure class="nxFig"><img src="assets/nexus-x-urun.jpg" alt="Nexus-X nöro stabilizatör kutusu ve şişesi"><figcaption class="mono">NEXUS-X · NÖRO STABİLİZATÖR · KUTU + ŞİŞE · HASAT KODU DZ-99</figcaption></figure>'+
+      '<figure class="nxFig"><img src="assets/nexus-x.png" alt="Nexus-X nöro stabilizatör kutusu ve şişesi"><figcaption class="mono">NEXUS-X · NÖRO STABİLİZATÖR · KUTU + ŞİŞE · HASAT KODU DZ-99</figcaption></figure>'+
       kv([['HASAT KODU','DZ-99'],['PROTOKOL',$('nxProto').textContent,$('nxProto').style.color],['DOZAJ YÜKÜ',nexusLoad+'%'],['BU OTURUMDA UYGULANAN',nxApplied+' BİRİM'],['SENTETİK TAKVİYE','AKTİF'],['UYARI','RADYOAKTİF YAN ETKİ OLABİLİR',C.am]])+
       '<div class="micro">Sistemin dışına çıkan veya insani belirtiler gösteren bireylere verilir. Mikro düzeydeki duygusal sapmaları ve ritim bozukluklarını baskılayarak bireyi makineleşmiş düzene yeniden entegre eder. İyileştirmez; standart ayarlara döndürür. TEMEL ÇİZGİ TESTİ ÖNCESİ KULLANIM İÇİNDİR.</div>',
       [{label:'KAPAT',kind:'ghost'},{label:'1 BİRİM UYGULA',kind:'pink',primary:true,fn:()=>act('N')}]);
   }else{
     openModal('SYNTEX-81 · SENTETİK PROTEİN RASYONU','合成タンパク質',
       '<div class="band" style="background:var(--or)"><span class="disp" style="font-weight:900;font-size:40px">SYNTEX-81</span><span class="mono" style="font-size:13px;letter-spacing:2px">PROTEİN KAPSÜLÜ</span></div>'+
+      '<figure class="nxFig sxFig"><img src="assets/syntex-81.png" alt="SYNTEX-81 sentetik protein rasyonu vakum paketi"><figcaption class="mono">SYNTEX-81 · CYBERNETIC PROTEIN RATION · NET 220 G · HASAT KODU DZ-21</figcaption></figure>'+
       kv([['ÜRETİCİ','DZC-81 SENTETİK TARIM KOMPLEKSİ'],['HASAT KODU','DZ-21'],['SENTETİK PROTEİN ORANI','%88,4'],['BUGÜNKÜ TÜKETİM',cur.rations+'/3 BLOK',cur.rations<3?C.am:C.cy]])+
       '<div class="micro">Sistem vatandaşlarının günlük kalori ve zihinsel stabilizasyon ihtiyacı için optimize edilmiştir. Payınızı tüketiniz ve sisteme itaat ediniz. Standartlaştırılmış beslenmeye uyulmaması temel çizgi sapmasına yol açar.</div>',
       [{label:'KAPAT',kind:'ghost'},{label:cur.rations<3?'EKSİK RASYONU TESLİM ET':'TÜKETİM KAYDINI DOĞRULA',kind:'primary',primary:true,fn:()=>{
@@ -376,6 +377,7 @@ $('cPause').onclick=()=>{SFX.click();setPause(!paused);};
 $('cSound').onclick=()=>setSound(!soundOn);
 $('cHelp').onclick=()=>{SFX.click();openHelp();};
 $('nxImg').onclick=()=>{if(!started)return;SFX.click();openDoc(2);};
+$('sxBtn').onclick=()=>{if(!started)return;SFX.click();openDoc(3);};
 $('cFull').onclick=()=>{SFX.click();try{if(document.fullscreenElement)document.exitFullscreen();else document.documentElement.requestFullscreen().catch(()=>toast('TAM EKRAN BU GÖRÜNÜMDE DESTEKLENMİYOR'));}catch(e){toast('TAM EKRAN BU GÖRÜNÜMDE DESTEKLENMİYOR');}};
 
 addEventListener('keydown',e=>{
