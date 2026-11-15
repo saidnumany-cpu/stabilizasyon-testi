@@ -276,15 +276,25 @@ html.light #rot{background:#FFFFFF;color:#14161A;border-color:#0A7D8F}
 html.light #photo,html.light .qav{filter:grayscale(1) contrast(1.05)}
 
 /* =====================================================
-   YAZDIRMA — A4 yatay, tek sayfa
+   YAZDIRMA — A4 yatay, tek sayfa (zoom yerleşimi de küçültür)
    ===================================================== */
 @media print{
   @page{size:A4 landscape;margin:0}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;animation:none!important;transition:none!important}
-  html,body{overflow:visible!important;height:auto!important;background:var(--bg)!important}
-  #fit{position:static!important;display:block!important}
-  #stage{transform:scale(.58)!important;transform-origin:0 0!important;width:1920px!important;height:1080px!important;padding:0!important}
+  html,body{width:297mm!important;height:210mm!important;overflow:hidden!important;margin:0!important;padding:0!important;background:var(--bg)!important}
+  #fit{position:static!important;display:flex!important;align-items:center!important;justify-content:center!important;width:297mm!important;height:210mm!important;overflow:hidden!important}
+  #stage{transform:none!important;zoom:.58;width:1920px!important;height:1080px!important;min-height:0!important;padding:0!important;flex:none!important;break-inside:avoid;page-break-inside:avoid}
   #boot,#overlay,#toast,#rot,#ctls,#pauseBar,#pkflash,#stamp{display:none!important}
-  .mstrip>span{display:inline!important}
 }
 html.mob #ctls{grid-template-columns:repeat(3,minmax(0,1fr))}
+
+/* aydınlık tema: buton ve kontrol düzeltmeleri */
+html.light .ctl[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+html.light .ctl[aria-pressed="true"] .mu{color:#9AA0A6}
+html.light .ctl:hover{border-color:var(--fg);background:#F7F6F2}
+html.light .ctl[aria-pressed="true"]:hover{background:#2A2D33}
+.btn.locked{background:transparent!important;color:var(--mu)!important;border:1px dashed var(--line)!important;opacity:1;filter:none!important}
+html.light .btn{box-shadow:0 1px 0 rgba(0,0,0,.08)}
+html.light .btn:hover{filter:brightness(.92)}
+html.light .btn.locked{box-shadow:none}
+html.light #bootBtn:disabled{opacity:.45}
