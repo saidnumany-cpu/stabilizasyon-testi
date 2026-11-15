@@ -1,0 +1,50 @@
+:root{--bg:#08090B;--fg:#E8E6E1;--mu:#9AA0A6;--line:#262A30;--line2:#1A1D22;--cy:#5CCFE0;--or:#F4703F;--pk:#FF4FB0;--rd:#FF3341;--rl:#FF4552;--red:#E8202A;--am:#FFB020;--st:#FFB020}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:#000;overflow:hidden}
+#fit{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+#stage{width:1920px;height:1080px;flex:none;transform-origin:center center;background-color:var(--bg);color:var(--fg);font-family:'Chakra Petch','IBM Plex Mono',sans-serif;display:flex;flex-direction:column;overflow:hidden;position:relative;
+background-image:repeating-linear-gradient(0deg,rgba(255,255,255,.022) 0,rgba(255,255,255,.022) 1px,transparent 1px,transparent 3px)}
+.mono{font-family:'Kode Mono',monospace}
+.disp{font-family:'Tektur',sans-serif;font-stretch:75%}
+.jp{font-family:'M PLUS 1 Code',sans-serif}
+.mu{color:var(--mu)}
+.lbl{font-family:'Kode Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--mu)}
+.secH{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--fg);padding-bottom:8px}
+.secT{font-family:'Tektur',sans-serif;font-stretch:75%;font-weight:800;font-size:18px;letter-spacing:1px}
+.secS{font-family:'Kode Mono',monospace;font-size:10.5px;color:var(--mu);letter-spacing:1px}
+header{height:76px;display:grid;grid-template-columns:560px minmax(0,1fr) 470px;border-bottom:2px solid var(--fg)}
+.chip{padding:0 20px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+main{flex:1;min-height:0;display:grid;grid-template-columns:560px minmax(0,1fr) 470px}
+section{display:flex;flex-direction:column;min-height:0}
+.field{display:flex;flex-direction:column;gap:1px;border-top:1px solid var(--line);padding-top:4px}
+.field .k{font-family:'Kode Mono',monospace;font-size:10px;color:var(--rl);letter-spacing:1.5px}
+.field .v{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.zone{border:1px solid var(--line);padding:5px 0 4px;display:flex;flex-direction:column;align-items:center;gap:3px}
+.metric{border:1px solid var(--line);padding:8px 12px;display:flex;flex-direction:column;gap:3px}
+.metric .v{font-family:'Tektur',sans-serif;font-stretch:75%;font-weight:800;font-size:32px;line-height:1}
+.step{border-top:3px solid var(--line);padding-top:4px;display:flex;flex-direction:column;gap:1px;font-size:10.5px;color:var(--mu);transition:border-color .3s,color .3s}
+.step.done{border-color:var(--fg);color:var(--fg)}
+.step.on{border-color:var(--st);color:var(--fg)}
+.doc{border:1px solid var(--line);padding:8px 10px;display:flex;flex-direction:column;gap:3px}
+.qrow{display:grid;grid-template-columns:22px 60px minmax(0,1fr) 88px;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid var(--line2);font-size:12px}
+.qrow.cur{background:rgba(232,230,225,.06)}
+.tag{font-family:'Kode Mono',monospace;font-size:10px;letter-spacing:1px;text-align:center;padding:3px 0;border:1px solid}
+.logl{display:grid;grid-template-columns:62px 40px minmax(0,1fr);gap:8px}
+.logl span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logl.new{animation:fadein .5s}
+@keyframes fadein{from{background:rgba(92,207,224,.18)}to{background:transparent}}
+.warn{padding:10px 14px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.warn .h{font-family:'Kode Mono',monospace;font-size:10px;color:var(--or);letter-spacing:2px}
+.warn .t{font-size:11.5px;line-height:1.35}
+#warnband.alarm{animation:alarm 1s steps(2) infinite}
+@keyframes alarm{50%{background:rgba(255,51,65,.14)}}
+.btn{height:54px;padding:0 22px;font-family:'Tektur',sans-serif;font-stretch:75%;font-weight:800;font-size:18px;letter-spacing:1px;cursor:pointer;transition:filter .15s,transform .05s}
+.btn:hover{filter:brightness(1.15)}
+.btn:active{transform:translateY(1px)}
+.btn:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn small{font-family:'Kode Mono',monospace;font-size:11px;font-weight:400}
+#stamp{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-8deg) scale(1.4);opacity:0;pointer-events:none;border:6px solid;padding:14px 34px;text-align:center;background:rgba(8,9,11,.82);transition:opacity .15s,transform .2s}
+#stamp.show{opacity:1;transform:translate(-50%,-50%) rotate(-8deg) scale(1)}
+#pkflash{position:absolute;inset:0;background:var(--pk);opacity:0;pointer-events:none;transition:opacity .6s}
+.glowS{text-shadow:0 0 24px var(--st)}

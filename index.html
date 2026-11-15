@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DZC-81 Denetim Terminali · Stabilizasyon Testi</title>
+<meta name="description" content="2099 Sistem Evreni — DZC-81 Geçiş ve Kontrol Düğümü denetim terminali. Said Numan Yücel, Yazı ve Tipografi.">
+<meta name="theme-color" content="#08090B">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Audiowide&family=Tektur:wdth,wght@75..100,400..900&family=Chakra+Petch:wght@400;500;600;700&family=Kode+Mono:wght@400..700&family=VT323&family=M+PLUS+1+Code:wght@400;700&family=Sedgwick+Ave&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="fit"><div id="stage">
+
+<header>
+  <div style="display:flex;align-items:center;gap:18px;padding:0 24px;border-right:1px solid var(--line)">
+    <div style="font-family:'Audiowide',sans-serif;font-weight:400;font-size:39px;line-height:1;letter-spacing:1px;text-shadow:0 0 14px rgba(92,207,224,.35)">DZC-81</div>
+    <div style="display:flex;flex-direction:column;gap:3px">
+      <div class="disp" style="font-weight:700;font-size:16px;letter-spacing:1px">MERKEZİ DENETİM VE KONTROL BAŞKANLIĞI</div>
+      <div class="mono mu" style="font-size:11px;letter-spacing:2px">GEÇİŞ VE KONTROL DÜĞÜMÜ · <span class="jp" style="letter-spacing:1px">中央通過管理</span> · IST-34 ⇄ ANK-06</div>
+    </div>
+  </div>
+  <div class="mono" style="display:flex;align-items:center;font-size:12px;letter-spacing:1px">
+    <div class="chip"><span class="mu">TERMİNAL</span><span>T-07 / ŞERİT B</span></div>
+    <div class="chip"><span class="mu">VARDİYA</span><span>III · 14:00–22:00</span></div>
+    <div class="chip"><span class="mu">GÖREVLİ</span><span>DNT-2207 · ÇELİK, O.</span></div>
+    <div class="chip"><span class="mu">SEKTÖR TARAMASI</span><span style="color:var(--or)">POZİTİF</span></div>
+    <div class="chip" style="border:none"><span class="mu">AĞ</span><span>TRANS-METRO ORBİTAL · ŞİFRELİ</span></div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:flex-end;gap:18px;padding:0 24px;border-left:1px solid var(--line)">
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+      <div class="mono mu" style="font-size:11px;letter-spacing:2px">2099.11.15 · 2099 SİSTEM EVRENİ</div>
+      <div id="clock" style="font-family:'VT323',monospace;font-size:50px;line-height:.8;letter-spacing:2px;color:var(--cy);text-shadow:0 0 12px rgba(92,207,224,.55)">00:00:00</div>
+    </div>
+    <div style="width:14px;height:14px;background:var(--cy);box-shadow:0 0 10px var(--cy)" aria-hidden="true"></div>
+  </div>
+</header>
+
+<div class="mono mu" style="height:26px;display:flex;align-items:center;gap:26px;padding:0 24px;border-bottom:1px solid var(--line);font-size:10.5px;letter-spacing:1.5px;white-space:nowrap;overflow:hidden">
+  <span style="color:var(--fg)">■ BİRBİRİYLE BAĞLANTILI HÜCRELER PROTOKOLÜ AKTİF</span>
+  <span>OCR DOĞRULAMA K06-3.7</span>
+  <span>KUYRUK <b id="cQueue" style="font-weight:400;color:var(--fg)">14</b></span>
+  <span>GÜNLÜK GEÇİŞ <b id="cPass" style="font-weight:400;color:var(--fg)">1.207</b></span>
+  <span>RET <b id="cRet" style="font-weight:400;color:var(--fg)">38</b> · BEKLETME <b id="cHold" style="font-weight:400;color:var(--fg)">61</b></span>
+  <span style="color:var(--pk)">NEXUS-X UYGULAMA <b id="cNx" style="font-weight:400">23</b></span>
+  <span>BİYO-SENSÖR 6/6 ✓</span>
+  <span>ARŞİV SUNUCUSU 87% ▸▸▸</span>
+  <span>DATA_BLOCK [448-93-11-0]</span>
+</div>
+
+<main>
+  <!-- 01 -->
+  <section style="border-right:1px solid var(--line);padding:16px 24px;gap:12px">
+    <div class="secH"><div class="secT"><span style="color:var(--rl)">01</span> — KİMLİK / YETKİ</div><div class="secS">KAYNAK: PERSONEL ERİŞİM KARTI · R-2</div></div>
+    <div style="position:relative;height:160px">
+      <div style="position:absolute;left:0;right:0;top:52px;height:56px;background:var(--red)" aria-hidden="true"></div>
+      <div style="position:absolute;left:8px;top:0;width:152px;height:152px;border-radius:50%;border:4px solid var(--red);overflow:hidden;background:#1A1D22">
+        <img id="photo" src="assets/aras-kaan-vardar.jpg" alt="Personel vesikalık fotoğrafı" style="width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1)">
+        <svg id="silh" width="144" height="144" viewBox="0 0 144 144" role="img" aria-label="Fotoğraf arşivden çekiliyor" style="display:none">
+          <circle cx="72" cy="58" r="26" fill="none" stroke="#9AA0A6" stroke-width="1.5"/>
+          <path d="M22 144 C 26 106, 50 92, 72 92 C 94 92, 118 106, 122 144" fill="none" stroke="#9AA0A6" stroke-width="1.5"/>
+          <line x1="0" y1="58" x2="144" y2="58" stroke="#5CCFE0" stroke-width=".75" stroke-dasharray="3 3"/>
+          <line x1="72" y1="0" x2="72" y2="144" stroke="#5CCFE0" stroke-width=".75" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+      <div id="sig" style="position:absolute;left:200px;top:50px;font-family:'Sedgwick Ave',cursive;font-size:48px;line-height:1;color:#fff;transform:rotate(-8deg)">Arv</div>
+      <div style="position:absolute;right:8px;top:62px;display:flex;flex-direction:column;align-items:flex-end;gap:2px;color:#fff">
+        <span class="jp" style="font-size:20px;line-height:1">制限区域</span>
+        <span class="mono" style="font-size:10px;letter-spacing:1.5px">KISITLI BÖLGE</span>
+      </div>
+      <div class="mono mu" style="position:absolute;right:8px;bottom:6px;font-size:10px;letter-spacing:1px">YÜZ EŞLEŞME <span id="face">97,2</span>% · BİYOMETRİK İMZA ✓</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:2px">
+      <span id="name" class="disp" style="font-weight:800;font-size:30px;line-height:1;letter-spacing:1px">ARAS KAAN VARDAR</span>
+      <span class="mono" style="font-size:14px;color:var(--rl);letter-spacing:1.5px">PERSONEL KODU: <span id="pid">DZC-8109-AKV</span></span>
+    </div>
+    <div style="display:flex;align-items:flex-end;gap:16px">
+      <div style="display:flex;flex-direction:column;gap:3px;flex:none">
+        <div id="barcode" style="display:flex;height:30px" aria-hidden="true"></div>
+        <span id="barTxt" class="mono" style="font-size:9.5px;letter-spacing:5px"></span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:2px;min-width:0">
+        <span class="mono" style="font-size:10px;color:var(--rl);letter-spacing:1.5px">DEPARTMAN</span>
+        <span id="dept" style="font-size:12.5px;font-weight:600;line-height:1.2">SİSMİK KALİBRASYON VE ALTYAPI DENETİMİ</span>
+      </div>
+    </div>
+    <div id="fields" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px"></div>
+    <div id="mrz" class="mono" style="background:#111318;border:1px solid var(--line);border-left:6px solid var(--red);padding:8px 12px;font-size:14.5px;letter-spacing:1.4px;line-height:1.45;white-space:pre;overflow:hidden"></div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div class="mono" style="display:flex;justify-content:space-between;font-size:11px;letter-spacing:1.5px"><span>YETKİ MATRİSİ · SEKTÖR KODLARI</span><span class="mu">■ AÇIK □ KOŞULLU × KAPALI</span></div>
+      <div id="zones" style="display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px"></div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="center" style="padding:16px 28px;gap:13px;min-width:0;position:relative">
+    <div class="secH"><div class="secT"><span id="c02" style="color:var(--st)">02</span> — ZİHİNSEL STABİLİZASYON · TEMEL ÇİZGİ TESTİ</div><div class="secS">SEANS <span id="sess">8109-C</span> · DÖNGÜ <span id="cyc">1</span>/7</div></div>
+    <div style="display:flex;align-items:stretch;gap:16px">
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:4px">
+        <div class="mono mu" style="font-size:11px;letter-spacing:2px">BASELINE KALİBRASYON SAPMASI · <span class="jp">基準線偏差</span></div>
+        <div style="display:flex;align-items:baseline;gap:14px">
+          <span id="dev" class="disp glowS" style="font-weight:900;font-size:112px;line-height:.9;letter-spacing:-1px;color:var(--st)">0.0000</span>
+          <span class="mono mu" style="font-size:15px">/ EŞİK 0.0400</span>
+        </div>
+      </div>
+      <div style="width:300px;display:flex;flex-direction:column;gap:6px">
+        <div id="stBox" style="flex:1;background:var(--st);color:var(--bg);padding:10px 16px;display:flex;flex-direction:column;justify-content:space-between;transition:background .3s">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span class="mono" style="font-size:11px;letter-spacing:2px">DURUM / STATUS</span><span id="stJp" class="jp" style="font-size:22px">測定</span></div>
+          <span id="stTxt" class="disp" style="font-weight:900;font-size:52px;line-height:.95">ÖLÇÜM</span>
+        </div>
+        <div id="stNote" class="mono" style="font-size:11px;letter-spacing:1px">TEST SÜRÜYOR · DENEK SABİT DURMALI</div>
+      </div>
+    </div>
+    <div style="position:relative;border:1px solid var(--line);height:176px;background:#0C0E12">
+      <svg width="100%" height="100%" viewBox="0 0 800 230" preserveAspectRatio="none" role="img" aria-label="Temel çizgi ve canlı biyometrik dalga grafiği">
+        <defs><pattern id="g" width="40" height="23" patternUnits="userSpaceOnUse"><path d="M40 0 H0 V23" fill="none" stroke="#1A1D22" stroke-width="1"/></pattern></defs>
+        <rect width="800" height="230" fill="url(#g)"/>
+        <rect x="0" y="75" width="800" height="80" fill="#5CCFE0" fill-opacity=".05"/>
+        <line x1="0" y1="75" x2="800" y2="75" stroke="#9AA0A6" stroke-dasharray="6 4"/>
+        <line x1="0" y1="155" x2="800" y2="155" stroke="#9AA0A6" stroke-dasharray="6 4"/>
+        <polyline id="base" fill="none" stroke="#6C727A" stroke-width="1.5"/>
+        <polyline id="wave" fill="none" stroke="#FFB020" stroke-width="2"/>
+        <line x1="720" y1="0" x2="720" y2="230" stroke="#E8E6E1"/>
+      </svg>
+      <div class="mono mu" style="position:absolute;left:10px;top:8px;font-size:10px;letter-spacing:1px">+ EŞİK BANDI ±0.0400</div>
+      <div class="mono" style="position:absolute;right:10px;top:8px;display:flex;gap:14px;font-size:10px;letter-spacing:1px"><span class="mu">— TEMEL ÇİZGİ (KAYIT <span id="baseRef">SYS-8489</span>)</span><span style="color:var(--st)">— CANLI</span></div>
+      <div class="mono mu" style="position:absolute;left:10px;bottom:6px;font-size:10px">T−60 sn</div>
+      <div class="mono mu" style="position:absolute;right:10px;bottom:6px;font-size:10px">ŞİMDİ</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+      <div class="metric"><span class="lbl">NABIZ</span><div style="display:flex;align-items:baseline;gap:6px"><span class="v" id="m0">72</span><span class="mu" style="font-size:11px">atım/dk</span></div><span class="mono md" style="font-size:10.5px" id="d0"></span></div>
+      <div class="metric"><span class="lbl">GALVANİK DERİ</span><div style="display:flex;align-items:baseline;gap:6px"><span class="v" id="m1">4,1</span><span class="mu" style="font-size:11px">µS</span></div><span class="mono md" style="font-size:10.5px" id="d1"></span></div>
+      <div class="metric"><span class="lbl">PUPİL ÇAPI</span><div style="display:flex;align-items:baseline;gap:6px"><span class="v" id="m2">3,8</span><span class="mu" style="font-size:11px">mm</span></div><span class="mono md" style="font-size:10.5px" id="d2"></span></div>
+      <div class="metric"><span class="lbl">RİTİM BOZUKLUĞU</span><div style="display:flex;align-items:baseline;gap:6px"><span class="v" id="m3">0,09</span><span class="mu" style="font-size:11px">idx</span></div><span class="mono md" style="font-size:10.5px" id="d3"></span></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:stretch">
+      <div style="flex:1;border:1px solid var(--fg);padding:8px 14px;display:flex;flex-direction:column;gap:4px">
+        <span class="lbl">UYARAN <span id="uyN">05</span>/07 · DENEKTEN TEKRAR ETMESİ İSTENEN</span>
+        <span id="uyT" class="disp" style="font-weight:700;font-size:21px;letter-spacing:2px">«BİRBİRİYLE. BAĞLANTILI. HÜCRELER. SİSTEM.»</span>
+      </div>
+      <div style="width:190px;border:1px solid var(--line);padding:8px 14px;display:flex;flex-direction:column;gap:2px">
+        <span class="lbl">YANIT GECİKMESİ</span>
+        <span id="lat" style="font-family:'VT323',monospace;font-size:30px;line-height:1;color:var(--st)">— sn</span>
+      </div>
+    </div>
+    <div id="steps" style="display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px"></div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-top:2px">
+      <div class="mono" style="display:flex;justify-content:space-between;font-size:11px;letter-spacing:1.5px"><span>TARANAN NESNELER · ÇAPRAZ DOĞRULAMA</span><span class="mu" id="docCount">0/4 OKUNDU</span></div>
+      <div id="docs" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px"></div>
+    </div>
+    <div id="stamp"><div id="stampJp" class="jp" style="font-size:40px;line-height:1"></div><div id="stampTx" class="disp" style="font-weight:900;font-size:64px;line-height:1"></div><div id="stampSub" class="mono" style="font-size:12px;letter-spacing:2px;margin-top:4px"></div></div>
+    <div id="pkflash"></div>
+  </section>
+
+  <!-- RIGHT -->
+  <section style="border-left:1px solid var(--line);padding:16px 24px;gap:11px">
+    <div class="secH"><div class="secT"><span style="color:var(--cy)">03</span> — TRANSİT KUYRUĞU</div><div class="secS">ŞERİT B · <span id="qWait">14</span> BEKLEYEN</div></div>
+    <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;background:var(--cy);color:var(--bg)">
+      <div style="padding:6px 10px;display:flex;flex-direction:column;gap:1px">
+        <span class="jp" style="font-size:15px;line-height:1.1">軌道運行システム</span>
+        <span class="mono" style="font-size:10px;letter-spacing:1px">YÖRÜNGE SEFER SİSTEMİ · <span id="route">IST-34 → DZC-81 → ANK-06</span></span>
+      </div>
+      <div style="padding:6px 12px;background:var(--or);display:flex;flex-direction:column;justify-content:center;align-items:flex-end">
+        <span class="mono" style="font-size:9.5px;letter-spacing:1px">KALKIŞ → VARIŞ</span>
+        <span id="times" class="disp" style="font-weight:800;font-size:18px;line-height:1">17.50 → 18.20</span>
+      </div>
+    </div>
+    <div id="queue" style="display:flex;flex-direction:column"></div>
+
+    <div class="secH" style="margin-top:2px"><div class="secT"><span style="color:var(--pk)">04</span> — NÖRO-STABİLİZASYON</div><div class="secS">“STANDART AYARLARA” DÖNÜŞ</div></div>
+    <div style="border:1px solid var(--pk);display:flex;flex-direction:column">
+      <div style="background:var(--pk);color:var(--bg);padding:6px 12px;display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;align-items:baseline;gap:10px"><span class="disp" style="font-weight:900;font-size:24px;line-height:1">NEXUS-X</span><span class="jp" style="font-size:15px">ネクサス-X</span></div>
+        <span class="jp" style="font-size:22px;line-height:1">合成</span>
+      </div>
+      <div style="padding:8px 12px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 14px">
+        <div style="display:flex;flex-direction:column;gap:1px"><span class="lbl" style="font-size:9.5px">PROTOKOL</span><span id="nxProto" style="font-size:12.5px;font-weight:700">—</span></div>
+        <div style="display:flex;flex-direction:column;gap:1px"><span class="lbl" style="font-size:9.5px">HASAT KODU</span><span style="font-size:12.5px;font-weight:600">DZ-99 · NÖRO STABİLİZATÖR</span></div>
+        <div style="display:flex;flex-direction:column;gap:1px"><span class="lbl" style="font-size:9.5px">SENTETİK TAKVİYE</span><span id="nxLast" style="font-size:12.5px;font-weight:600">AKTİF · SON 2099.10.02</span></div>
+        <div style="display:flex;flex-direction:column;gap:1px"><span class="lbl" style="font-size:9.5px">SYNTEX-81 RASYON</span><span id="nxRat" style="font-size:12.5px;font-weight:600">3/3 BLOK · PROTEİN %88,4</span></div>
+        <div style="grid-column:span 2;display:flex;flex-direction:column;gap:3px">
+          <div class="lbl" style="display:flex;justify-content:space-between;font-size:9.5px"><span>DOZAJ YÜKÜ</span><span id="nxLoadT">8%</span></div>
+          <div style="height:6px;background:#1A1D22"><div id="nxLoad" style="height:6px;width:8%;background:var(--pk);box-shadow:0 0 8px var(--pk);transition:width .6s"></div></div>
+        </div>
+      </div>
+      <div class="mono mu" style="border-top:1px solid var(--line);padding:4px 12px;font-size:9px;letter-spacing:1px">☢ RADYOAKTİF YAN ETKİSİ OLABİLEN TIBBİ İLAÇ · TEMEL ÇİZGİ TESTİ ÖNCESİ KULLANIM İÇİNDİR</div>
+    </div>
+
+    <div class="secH" style="margin-top:2px"><div class="secT"><span class="mu">05</span> — ALTYAPI KAYITLARI</div><div class="secS">CANLI · SALT OKUNUR</div></div>
+    <div id="logs" class="mono" role="log" aria-live="polite" style="flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:3px;font-size:11px;line-height:1.35"></div>
+  </section>
+</main>
+
+<div id="warnband" style="display:grid;grid-template-columns:130px repeat(5,minmax(0,1fr));border-top:2px solid var(--or);border-bottom:1px solid var(--line);height:96px">
+  <div style="background:var(--or);color:var(--bg);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px">
+    <span class="jp" style="font-size:34px;line-height:1">警告</span>
+    <span class="disp" style="font-weight:900;font-size:15px;letter-spacing:1px">UYARI 81/7</span>
+  </div>
+  <div class="warn"><span class="h">TR · UYARI</span><span class="t">Temel çizgiden sapan birey derhal stabilizasyona alınır. İzinsiz bölge değişimi vatandaşlıktan çıkarılma sebebidir.</span></div>
+  <div class="warn"><span class="h">EN · WARNING</span><span class="t">Any deviation from baseline triggers immediate stabilization. Unauthorized zone transfer results in revocation of citizenship.</span></div>
+  <div class="warn"><span class="h">JA · <span class="jp">警告:システム違反</span></span><span class="jp" style="font-size:12.5px;line-height:1.4">基準線から逸脱した者は直ちに安定化処置を受ける。無許可の区域移動は市民権剥奪の対象となる。</span></div>
+  <div class="warn"><span class="h">DE · WARNUNG</span><span class="t">Jede Abweichung von der Grundlinie führt zur sofortigen Stabilisierung. Unerlaubter Zonenwechsel führt zum Entzug der Bürgerschaft.</span></div>
+  <div class="warn" style="border:none"><span class="h">RU · ВНИМАНИЕ</span><span class="t">Любое отклонение от базовой линии ведёт к немедленной стабилизации. Самовольная смена зоны — лишение гражданства.</span></div>
+</div>
+
+<div style="height:78px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;gap:24px">
+  <div class="mono" style="display:flex;gap:28px;font-size:11px;letter-spacing:1px">
+    <div style="display:flex;flex-direction:column;gap:3px"><span class="mu">KARAR BEKLEYEN</span><span id="pending" style="font-size:15px">—</span></div>
+    <div style="display:flex;flex-direction:column;gap:3px"><span class="mu">OTOMATİK ÖNERİ</span><span id="advice" style="font-size:15px;color:var(--st)">TEST SÜRÜYOR…</span></div>
+    <div style="display:flex;flex-direction:column;gap:3px"><span class="mu">KARAR SÜRESİ</span><span id="timer" style="font-size:15px">— / 00:30</span></div>
+    <div style="display:flex;flex-direction:column;gap:3px"><span class="mu">KLAVYE</span><span style="font-size:15px">F1–F4 · 1–4</span></div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button type="button" class="btn" id="bA" style="background:var(--cy);color:var(--bg);border:none">承認 ONAYLA <small>[F1]</small></button>
+    <button type="button" class="btn" id="bH" style="background:transparent;color:var(--fg);border:1px solid var(--fg)">BEKLET <small>[F2]</small></button>
+    <button type="button" class="btn" id="bN" style="background:transparent;color:var(--pk);border:1px solid var(--pk)">NEXUS-X UYGULA <small>[F3]</small></button>
+    <button type="button" class="btn" id="bR" style="background:var(--rd);color:var(--bg);border:none">REDDET / KARANTİNA <small>[F4]</small></button>
+  </div>
+</div>
+
+<footer class="mono" style="height:24px;display:flex;align-items:center;gap:18px;padding:0 24px;background:var(--fg);color:var(--bg);font-size:10px;letter-spacing:1.5px;white-space:nowrap;overflow:hidden">
+  <span>SYS-CHK-99.8 &gt;&gt; AUTH: 10938-X &gt;&gt; TRANS-METRO ORBITAL NETWORKS &gt;&gt; DZC-81_HUB &gt;&gt; DATA_BLOCK: [448-93-11-0] &gt;&gt; END_OF_TRANSMISSION</span>
+  <span>·</span><span>BU EKRANDAKİ TÜM VERİLER DZC-81 OTORİTESİNİN MÜLKİYETİNDEDİR</span>
+  <span>·</span><span>BİREY YOK, YALNIZCA SİSTEM VAR</span>
+</footer>
+
+</div></div>
+
+<script src="app.js"></script>
+</body>
+</html>
