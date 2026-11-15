@@ -212,3 +212,6 @@ html.mob #timer{white-space:nowrap}
 html.mob .nxImg{width:96px}
 html.mob .nxImg img{height:88px}
 html.mob .nxFig img{max-height:260px}
+.modal .mb>*{flex:none}
+.nxFig img{height:380px;max-height:none;object-fit:contain}
+html.mob .nxFig img{height:240px}
