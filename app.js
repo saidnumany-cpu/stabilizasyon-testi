@@ -174,7 +174,7 @@ function renderId(){
   $('name').textContent=cur.name;$('pid').textContent=cur.id;$('dept').textContent=cur.dept;
   $('face').textContent=fmt(cur.face,1);
   $('photo').src=window.DZCPortrait(cur);$('photo').alt=cur.name+' vesikalık';$('photo').style.display='block';$('silh').style.display='none';
-  $('sig').textContent=cur.photo?'Arv':cur.sur.charAt(0)+cur.sur.slice(1,3).toLocaleLowerCase('tr');
+  const sg=$('sig');if(cur.photo){sg.classList.remove('svgsig');sg.textContent='Arv';}else{sg.classList.add('svgsig');sg.innerHTML=window.DZCSignature(cur);}
   $('fields').innerHTML='';
   cur.fields.forEach(([k,v])=>{const d=document.createElement('div');d.className='field';d.innerHTML='<span class="k"></span><span class="v"></span>';d.children[0].textContent=k;d.children[1].textContent=v;$('fields').appendChild(d);});
   $('mrz').textContent=cur.mrz;
@@ -279,6 +279,7 @@ function openDoc(i){
     openModal('PERSONEL ERİŞİM KARTI','制限区域',
       '<div style="display:flex;gap:18px;align-items:center"><div style="width:120px;height:120px;border-radius:50%;border:4px solid var(--red);overflow:hidden;flex:none;background:#1A1D22">'+'<img src="'+window.DZCPortrait(cur)+'" alt="" style="width:100%;height:100%;object-fit:cover;filter:grayscale(1)">'+'</div><div style="display:flex;flex-direction:column;gap:4px"><span class="disp" style="font-weight:800;font-size:30px">'+esc(cur.name)+'</span><span class="mono" style="color:var(--rl);font-size:14px;letter-spacing:1.5px">PERSONEL KODU: '+esc(cur.id)+'</span><span style="font-weight:600">'+esc(cur.dept)+'</span></div></div>'+
       kv(cur.fields.map(f=>[f[0],f[1]]).concat([['BASELINE DURUMU',s.t+' // KALİBRASYON: '+devShown.toFixed(4),s.c],['YÜZ EŞLEŞME',fmt(cur.face,1)+'%']]))+
+      '<div class="sigLine"><span class="lbl">BİYOMETRİK İMZA · '+esc(cur.id)+'</span>'+(cur.photo?'<span class="sigArv">Arv</span>':window.DZCSignature(cur,'big'))+'</div>'+
       '<pre class="mono" style="margin:0;background:#111318;border-left:6px solid var(--red);padding:10px 12px;font-size:14px;letter-spacing:1.3px">'+esc(cur.mrz)+'</pre>'+
       '<div class="micro">Bu kimlik kartı DZC-81 otoritesinin mülkiyetindedir. Yalnızca yetkili personelin kullanımına açıktır. Birbiriyle bağlantılı hücreler sistemi protokolü gereğince kart sahibinin zihinsel stabilizasyon ve temel çizgi testi doğrulaması periyodik olarak yapılmaktadır. İzinsiz kullanım kimliğin anında iptaline yol açar.</div>',
       [{label:'KAPAT',kind:'ghost'},{label:'BİYOMETRİK YENİDEN TARAMA',kind:'primary',primary:true,fn:()=>{cur.face=Math.min(99.8,cur.face+rnd(.1,.8));$('face').textContent=fmt(cur.face,1);log('OK','Yüz yeniden tarandı · eşleşme '+fmt(cur.face,1)+'%');toast('YÜZ EŞLEŞME '+fmt(cur.face,1)+'%',C.cy);SFX.ok();}}]);
@@ -315,7 +316,7 @@ const face=(sub,col)=>sub?'<div style="display:flex;gap:18px;align-items:center"
 function openRecord(h){
   const col=TAG[h.tag][2]===C.line?C.mu:TAG[h.tag][2];
   openModal('KARAR KAYDI · '+h.tag,'記録',
-    face(h.s,col)+kv([['KİMLİK',h.label],['KARAR',h.tag,col],['ZAMAN',h.t],['BASELINE SAPMASI',h.dev.toFixed(4)],['GÖREVLİ','DNT-2207 · ÇELİK, O.'],['ARŞİV','ARŞ-0 · BLOK 448-93-11-0']])+
+    face(h.s,col)+(h.s&&!h.s.photo?'<div class="sigLine"><span class="lbl">BİYOMETRİK İMZA</span>'+window.DZCSignature(h.s,'big')+'</div>':'')+kv([['KİMLİK',h.label],['KARAR',h.tag,col],['ZAMAN',h.t],['BASELINE SAPMASI',h.dev.toFixed(4)],['GÖREVLİ','DNT-2207 · ÇELİK, O.'],['ARŞİV','ARŞ-0 · BLOK 448-93-11-0']])+
     '<div class="micro">Bu karar düğüm arşivine kalıcı olarak yazılmıştır. Görevli kararları Merkez ANK-06 tarafından denetlenir ve geri alınamaz.</div>',
     [{label:'KAPAT',kind:'ghost'}]);
 }

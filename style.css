@@ -332,3 +332,16 @@ html.mob .modal.wide{width:100%}
 html.mob .secTop{grid-template-columns:1fr}
 html.mob .secGrid{grid-template-columns:repeat(3,minmax(0,1fr));max-height:300px}
 html.mob .secCard .disp{font-size:34px!important}
+/* prosedürel imza */
+#sig.svgsig{width:200px;height:74px;top:42px!important;transform:none!important;font-size:0!important;color:#FFFFFF}
+#sig.svgsig .sigsvg{width:100%;height:100%;display:block;overflow:visible}
+.sigsvg path{stroke-dasharray:1;stroke-dashoffset:1;animation:sigdraw .9s cubic-bezier(.45,.05,.35,1) forwards}
+.sigsvg .sigdot{fill:currentColor;stroke:none;opacity:0;animation:sigdot .15s forwards}
+@keyframes sigdraw{to{stroke-dashoffset:0}}
+@keyframes sigdot{to{opacity:1}}
+.sigLine{display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--line);padding-bottom:10px}
+.sigLine .sigsvg.big{width:100%;max-width:360px;height:96px;color:var(--fg)}
+.sigArv{font-family:'Sedgwick Ave',cursive;font-size:56px;line-height:1;color:var(--fg)}
+html.mob #sig.svgsig{width:150px;height:62px;left:168px!important}
+@media (prefers-reduced-motion:reduce){.sigsvg path{animation:none;stroke-dashoffset:0}.sigsvg .sigdot{animation:none;opacity:1}}
+@media print{.sigsvg path{stroke-dashoffset:0!important;stroke-dasharray:none!important}.sigsvg .sigdot{opacity:1!important}}
