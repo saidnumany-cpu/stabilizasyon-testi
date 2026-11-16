@@ -118,10 +118,11 @@ const NAMED={
   EMIRHAN:named('EMİRHAN DURNA',{num:'4410',dept:'SENTETİK TARIM KOMPLEKSİ',gorev:'HASAT DENETÇİSİ / FAZ-1',yetki:'SEVİYE 2 · ÜRETİM',dev:.0331,route:['KON-42','IST-34'],zones:[1,-1,1,1,-1,0,-1,-1],rations:2}),
   TARIK:named('TARIK BAYRAK',{num:'5530',dept:'LİMAN VE LOJİSTİK SEKTÖRÜ',gorev:'KONTEYNER KOORDİNATÖRÜ',yetki:'SEVİYE 3 · LİMAN',dev:.0094,route:['IZM-35','ANK-06']}),
   ILKER:named('İLKER ATA ÇELİKGİL',{num:'6602',dept:'SİSMİK KALİBRASYON VE ALTYAPI DENETİMİ',gorev:'ALTYAPI MÜHENDİSİ / FAZ-2',yetki:'SEVİYE 4 · KISITLI BÖLGE',dev:.0243,route:['ANK-06','TRB-61'],zones:[1,0,1,0,1,1,-1,-1]}),
-  ALMEDIN:named('ALMEDİN MESIC',{num:'7781',dept:'ARŞİV VE KAYIT BİRİMİ',gorev:'VERİ ARŞİVCİSİ / FAZ-2',yetki:'SEVİYE 3 · ARŞİV',dev:.0153,route:['EDR-22','ANK-06'],zones:[0,0,1,-1,-1,-1,1,-1]})
+  ALMEDIN:named('ALMEDİN MESIC',{num:'7781',dept:'ARŞİV VE KAYIT BİRİMİ',gorev:'VERİ ARŞİVCİSİ / FAZ-2',yetki:'SEVİYE 3 · ARŞİV',dev:.0153,route:['EDR-22','ANK-06'],zones:[0,0,1,-1,-1,-1,1,-1]}),
+  MUNTEHA:named('MÜNTEHA BÜŞRA YÜCEL',{num:'2412',dept:'BİYOMETRİK KAYIT BİRİMİ',gorev:'BİYOMETRİ UZMANI / FAZ-2',yetki:'SEVİYE 3 · KAYIT',dev:.0068,route:['BRS-16','ANK-06']})
 };
 NAMED.SAID.photo=false;
-let upcoming=[ARAS,NAMED.SERRA,gen(),NAMED.FURKAN,NAMED.YAKUP,gen(),NAMED.EMIRHAN,NAMED.TARIK,gen(),NAMED.ILKER,NAMED.ALMEDIN,gen()];
+let upcoming=[ARAS,NAMED.SERRA,gen(),NAMED.FURKAN,NAMED.YAKUP,gen(),NAMED.EMIRHAN,NAMED.TARIK,gen(),NAMED.ILKER,NAMED.ALMEDIN,NAMED.MUNTEHA,gen()];
 let history=[
   {t:'17:46:12',s:NAMED.SAID,label:'YÜCEL, SAİD N. · IST-34',tag:'GEÇTİ',dev:.0041},
   ...[['17:47:40','RET',.0712],['17:48:18','NEXUS-X',.0288],['17:48:55','BEKLET',.0235]].map(([t,tag,dev])=>{const g=gen();return{t,s:g,label:g.short+' · '+g.id.slice(0,8),tag,dev};})];
