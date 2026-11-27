@@ -76,13 +76,13 @@ img{display:block;max-width:100%}
 .card .stage{position:relative;aspect-ratio:4/5;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:22px;
 background:radial-gradient(circle at 50% 55%,color-mix(in srgb,var(--c) 16%,transparent),transparent 62%),
 linear-gradient(var(--line2) 1px,transparent 1px) 0 0/28px 28px,linear-gradient(90deg,var(--line2) 1px,transparent 1px) 0 0/28px 28px}
-.card .stage img{max-height:100%;width:auto;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.6));transition:transform .4s}
-.card:hover .stage img{transform:scale(1.04)}
+.card .stage>img{position:relative;z-index:1;max-height:100%;width:auto;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.6))}
 .card .stage .flat{box-shadow:0 18px 40px rgba(0,0,0,.6)}
-.card .stage .two{display:flex;gap:10px;height:100%;align-items:center;justify-content:center}
-.card .stage .two img{max-width:48%}
-.card .stage .two img:last-child{transform:translateY(16px) rotate(3deg)}
-.card:hover .stage .two img:last-child{transform:translateY(10px) rotate(1deg) scale(1.03)}
+.card .stage .two{position:relative;z-index:1;display:flex;gap:12px;height:100%;width:100%;align-items:center;justify-content:center}
+.card .stage .two .tw{width:44%}
+.card .stage .two .tw img{width:100%;height:auto}
+.card .stage .two .tw:last-child{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(16px) rotate(3deg)}
+.card:hover .stage .two .tw:last-child{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(10px) rotate(1deg)}
 .card .corner{position:absolute;width:14px;height:14px;border-color:var(--c);border-style:solid;opacity:.8}
 .card .corner.a{left:8px;top:8px;border-width:2px 0 0 2px}.card .corner.b{right:8px;top:8px;border-width:2px 2px 0 0}
 .card .corner.c{left:8px;bottom:8px;border-width:0 0 2px 2px}.card .corner.d{right:8px;bottom:8px;border-width:0 2px 2px 0}
@@ -127,8 +127,11 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 .gal .main{position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:28px;cursor:zoom-in;
 background:radial-gradient(circle at 50% 50%,color-mix(in srgb,var(--c) 14%,transparent),transparent 60%),
 linear-gradient(var(--line2) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(90deg,var(--line2) 1px,transparent 1px) 0 0/32px 32px}
-.gal .main img{max-height:100%;width:auto;object-fit:contain;filter:drop-shadow(0 22px 30px rgba(0,0,0,.65))}
-.gal .main img.flat{filter:none;box-shadow:0 20px 50px rgba(0,0,0,.65)}
+.gal .main{--ih:calc(min(880px,100vh - 64px) - 240px);overflow:hidden}
+.gal .main .tw{z-index:1}
+.gal .main .tw>img,.gal .main .f0{display:block;height:var(--ih);width:auto;max-width:100%;object-fit:contain}
+.gal .main .tw>img{filter:drop-shadow(0 22px 30px rgba(0,0,0,.65))}
+.gal .main .flat{filter:none;box-shadow:0 20px 50px rgba(0,0,0,.65)}
 .gal .zoomhint{position:absolute;right:12px;top:12px;font-family:'Kode Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--mu);background:rgba(8,9,11,.7);padding:3px 8px;pointer-events:none}
 .gal .cap{position:absolute;left:12px;bottom:12px;font-family:'Kode Mono',monospace;font-size:10.5px;letter-spacing:1.5px;background:rgba(8,9,11,.78);padding:3px 8px;pointer-events:none}
 .thumbs{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);flex:none}
@@ -162,13 +165,54 @@ linear-gradient(var(--line2) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(
 #zoom img{max-width:100%;max-height:100%;object-fit:contain}
 #zoom .mono{position:absolute;top:12px;right:16px;font-size:11px;letter-spacing:1.5px;color:var(--mu)}
 
+/* --- tipografi katmanı --- */
+.hero{position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1}
+.hjp{position:absolute;white-space:nowrap;right:clamp(10px,2vw,32px);top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-family:'M PLUS 1 Code',sans-serif;font-weight:700;font-size:clamp(48px,5.4vw,82px);line-height:1;letter-spacing:6px;color:transparent;-webkit-text-stroke:1px rgba(92,207,224,.2);pointer-events:none;user-select:none}
+.vjp{position:absolute;right:12px;top:30px;z-index:0;white-space:nowrap;writing-mode:vertical-rl;font-family:'M PLUS 1 Code',sans-serif;font-weight:700;font-size:clamp(22px,2.1vw,32px);line-height:1.05;letter-spacing:3px;color:transparent;-webkit-text-stroke:1px var(--c);opacity:.5;pointer-events:none;user-select:none;max-height:calc(100% - 60px);overflow:hidden}
+.gal .vjp{left:18px;right:auto;top:22px;font-size:clamp(44px,4.6vw,80px);opacity:.3}
+.rule{position:absolute;left:12px;top:30px;bottom:36px;width:10px;z-index:0;opacity:.75;pointer-events:none;border-left:1px solid var(--c);
+background:repeating-linear-gradient(to bottom,var(--c) 0 1px,transparent 1px 40px) left top/10px 100% no-repeat,repeating-linear-gradient(to bottom,var(--mu) 0 1px,transparent 1px 8px) left top/5px 100% no-repeat}
+.rule b{position:absolute;left:13px;top:0;writing-mode:vertical-rl;font-family:'Kode Mono',monospace;font-weight:400;font-size:9.5px;letter-spacing:2px;color:var(--mu);white-space:nowrap}
+.card .corner.a,.card .corner.c{display:none}
+.rail{position:fixed;top:96px;bottom:24px;width:22px;z-index:5;pointer-events:none;display:none}
+.rail.l{left:22px;writing-mode:vertical-rl;transform:rotate(180deg);font-family:'Kode Mono',monospace;font-size:10px;letter-spacing:2.5px;color:var(--mu);white-space:nowrap;overflow:hidden;border-right:1px solid var(--line);padding-right:6px}
+.rail.r{right:22px;border-left:1px solid var(--line);background:repeating-linear-gradient(to bottom,var(--line) 0 1px,transparent 1px 10px) left/7px 100% no-repeat,repeating-linear-gradient(to bottom,var(--mu) 0 1px,transparent 1px 50px) left/12px 100% no-repeat}
+.rail.r .mk{position:absolute;left:-4px;width:14px;height:2px;background:var(--cy);box-shadow:0 0 8px var(--cy);top:0}
+.rail.r b{position:absolute;left:16px;writing-mode:vertical-rl;font-family:'Kode Mono',monospace;font-weight:400;font-size:10px;letter-spacing:2px;color:var(--cy);white-space:nowrap;top:0}
+@media (min-width:1560px){.rail{display:block}}
+
+/* --- etkileşim katmanı --- */
+.tw{position:relative;display:inline-block;transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.card .stage>img{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.live .tw,.tw.live,.card.live .stage>img{transition:transform .08s linear}
+.card .stage .two .tw{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.card.live .stage .two .tw{transition:transform .08s linear}
+.glare{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.35),transparent 55%);mix-blend-mode:soft-light;opacity:0;transition:opacity .3s}
+.live .glare,.tw.live .glare{opacity:1}
+.holo{position:absolute;border-radius:50%;pointer-events:none;mix-blend-mode:color-dodge;opacity:.8;
+background:linear-gradient(115deg,transparent 22%,rgba(255,60,200,.6) 36%,rgba(60,255,240,.6) 46%,rgba(255,240,90,.55) 55%,rgba(150,90,255,.6) 64%,transparent 78%);background-size:280% 280%;background-position:var(--hx,30%) var(--hy,30%);animation:holo 5s ease-in-out infinite alternate}
+.live .holo,.tw.live .holo{animation:none}
+@keyframes holo{from{background-position:0% 0%}to{background-position:100% 100%}}
+img.float{animation:float 5.5s ease-in-out infinite}
+@keyframes float{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -9px;rotate:-1.2deg}}
+.fl{position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.3,.7,.2,1)}
+.fl.back{transform:rotateY(180deg)}
+.fl .f0{backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fl .f1{position:absolute;inset:0;transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fl .f1 img{display:block;width:100%;height:100%;box-shadow:0 20px 50px rgba(0,0,0,.65)}
+.thumbs .flipk{margin-left:auto;align-self:center;background:transparent;border:1px solid var(--c);color:var(--c);font-family:'Kode Mono',monospace;font-size:10.5px;letter-spacing:1.5px;padding:8px 12px;white-space:nowrap;box-shadow:none}
+.thumbs .flipk:hover{background:var(--c);color:var(--bg)}
+.dec{font-variant-ligatures:none}
+
 @media (max-width:1180px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:900px){
   .hero .wrap{grid-template-columns:1fr}
+  .hjp{display:none}
   .dl .db{display:block;overflow:auto;overscroll-behavior:contain}
   .gal,.info{min-height:auto;overflow:visible}
   .gal{border-right:none;border-bottom:1px solid var(--line)}
-  .gal .main{flex:none;height:min(58vh,520px)}
+  .gal .main{flex:none;height:min(58vh,520px);--ih:calc(min(58vh,520px) - 56px)}
   .cta{grid-template-columns:minmax(0,1fr)}
   .cta .btn{white-space:normal;text-align:center;font-size:17px;padding:0 16px}
   .cta .w{flex-direction:row;gap:12px}
@@ -187,8 +231,10 @@ linear-gradient(var(--line2) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(
   .kv{grid-template-columns:1fr}
   .df button .t{display:none}
   .thumbs button span{display:none}
+  .kf{display:none}
+  .thumbs .flipk{padding:8px 10px}
 }
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.tw,.card .stage>img{transform:none!important}}
 </style>
 </head>
 <body>
@@ -203,10 +249,13 @@ linear-gradient(var(--line2) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(
   </div>
 </header>
 
+<div class="rail l" aria-hidden="true">DZC-81 // ARŞİV 04 // SYS-CHK-99.8 // AUTH 10938-X // DATA_BLOCK [448-93-11-0] // TRANS-METRO ORBITAL NETWORKS // END_OF_TRANSMISSION</div>
+<div class="rail r" aria-hidden="true"><i class="mk" id="mk"></i><b id="ry">Y 0000</b></div>
 <div class="strip" aria-hidden="true"><div class="run" id="run"></div></div>
 
 <main>
 <section class="hero">
+  <span class="hjp" aria-hidden="true">製品目録</span>
   <div class="wrap">
     <div>
       <div class="k"><span class="lbl" style="color:var(--cy)">ARŞİV 04 / 04</span><span class="jp mu" style="font-size:14px">中央通過管理 · 制限区域</span></div>
@@ -251,7 +300,7 @@ linear-gradient(var(--line2) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(
 <script>
 const A='assets/urunler/';
 const P=[
-{id:'nexus-x',no:'01',name:'NEXUS-X',jp:'ネクサス-X · 合成',c:'var(--pk)',
+{id:'nexus-x',no:'01',name:'NEXUS-X',jp:'ネクサス-X · 合成',c:'var(--pk)',float:1,dim:'HASAT DZ-99 · 合成',
  cat:'NÖRO STABİLİZATÖR · TIBBİ İLAÇ',code:'HASAT KODU DZ-99',
  line:'İyileştirmez; standart ayarlara döndürür.',
  tag:'Sistemin dışına çıkan ya da insani belirtiler gösteren bireylere uygulanan nöro stabilizatör.',
@@ -261,7 +310,7 @@ const P=[
  warn:'RADYOAKTİF YAN ETKİSİ OLABİLEN TIBBİ İLAÇ.',
  term:'BÖLÜM 04 · NÖRO-STABİLİZASYON · [F3]',
  img:[{s:'nexus-x.webp',t:'KUTU + ŞİŞE'}]},
-{id:'syntex',no:'02',name:'SYNTEX-81',jp:'合成タンパク質',c:'var(--or)',
+{id:'syntex',no:'02',name:'SYNTEX-81',jp:'合成タンパク質',c:'var(--or)',float:1,dim:'NET 220 G · PARTİ 249-C',
  cat:'SENTETİK PROTEİN RASYONU',code:'HASAT KODU DZ-21',
  line:'Payınızı tüketiniz ve sisteme itaat ediniz.',
  tag:'Sistem vatandaşlarının günlük kalori ve zihinsel stabilizasyon ihtiyacı için optimize edilmiş protein bloğu.',
@@ -271,7 +320,7 @@ const P=[
  warn:'STANDART BESLENMEYE UYMAMAK TEMEL ÇİZGİ SAPMASINA YOL AÇAR.',
  term:'BÖLÜM 04 · SYNTEX-81 TÜKETİM KAYDI',
  img:[{s:'syntex-ambalaj.webp',t:'AMBALAJ'},{s:'syntex-afis.webp',t:'REKLAM AFİŞİ',flat:1}]},
-{id:'bilet',no:'03',name:'TRANSİT GEÇİŞ BELGESİ',short:'SEYAHAT BİLETİ',jp:'軌道運行システム',c:'var(--cy)',
+{id:'bilet',no:'03',name:'TRANSİT GEÇİŞ BELGESİ',short:'SEYAHAT BİLETİ',jp:'軌道運行システム',c:'var(--cy)',flip:1,dim:'80 × 150 MM · ÇİFT YÜZ',
  cat:'SEYAHAT BİLETİ · TRANS-METRO YÖRÜNGE AĞI',code:'IST-34 ⇄ DZC-81',
  line:'Lütfen belgeyi katlamayınız.',
  tag:'Neo-İstanbul ile Ankara İdari Merkez Kompleksi arasındaki yörünge hattının merkezi transit geçiş belgesi.',
@@ -281,7 +330,7 @@ const P=[
  warn:'İZİNSİZ BÖLGE DEĞİŞİMİ VEYA SAHTE KİMLİK KULLANIMINDA BELGE İPTAL EDİLİR.',
  term:'BÖLÜM 03 · TRANSİT KUYRUĞU · SEFER BİLGİSİ',
  img:[{s:'bilet-on.webp',t:'ÖN YÜZ',flat:1},{s:'bilet-arka.webp',t:'ARKA YÜZ · ŞEHİR BİLGİSİ',flat:1}]},
-{id:'kimlik',no:'04',name:'PERSONEL ERİŞİM KARTI',short:'KİMLİK KARTI',jp:'制限区域 · 承認',c:'var(--red)',
+{id:'kimlik',no:'04',name:'PERSONEL ERİŞİM KARTI',short:'KİMLİK KARTI',jp:'制限区域 · 承認',c:'var(--red)',flip:1,dim:'54 × 85 MM · ÇİFT YÜZ',
  cat:'KİMLİK KARTI · MERKEZİ DENETİM VE KONTROL BAŞKANLIĞI',code:'DZC-8109-SNY',
  line:'Birey yok, yalnızca sistem var.',
  tag:'DZC-81 otoritesinin mülkiyetindeki, yalnızca yetkili personele açık erişim kartı.',
@@ -290,7 +339,7 @@ const P=[
  kv:[['PERSONEL KODU','DZC-8109-SNY'],['DEPARTMAN','Sismik Kalibrasyon ve Altyapı Denetimi'],['GÖREV','Baş Tekniker / Faz-2'],['YETKİ DÜZEYİ','Seviye 4 · Kısıtlı bölge'],['GEÇERLİLİK','2099.11.04 – 2101.11.03'],['BASELINE','Stabil · kalibrasyon 0.0034'],['SİSTEM SERİ NO','SYS-8489-SNY-990'],['ÖLÇÜ','54 × 85 mm · çift yüz']],
  warn:'İZİNSİZ KULLANIM KİMLİĞİN ANINDA İPTALİNE VE CEZAİ MÜDAHALEYE TABİDİR.',
  term:'BÖLÜM 01 · KİMLİK / YETKİ',
- img:[{s:'kimlik-on-v2.webp',t:'ÖN YÜZ',flat:1},{s:'kimlik-arka-v2.webp',t:'ARKA YÜZ',flat:1}]}
+ img:[{s:'kimlik-on-v2.webp',t:'ÖN YÜZ',flat:1},{s:'kimlik-arka-v2.webp',t:'ARKA YÜZ',flat:1,holo:[11,32.5,71,71]}]}
 ];
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
@@ -298,15 +347,45 @@ const esc=s=>String(s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 /* şerit */
 (()=>{const t='■ BİRBİRİYLE BAĞLANTILI HÜCRELER PROTOKOLÜ AKTİF · ÜRÜN ARŞİVİ <b>04</b> KAYIT · NEXUS-X <b>DZ-99</b> · SYNTEX-81 <b>DZ-21</b> · %88,4 · TRANS-METRO ORBITAL NETWORKS · IST-34 ⇄ DZC-81 ⇄ ANK-06 · DATA_BLOCK [448-93-11-0] · SYS-CHK-99.8 · ';$('run').innerHTML='<span>'+t+'</span><span>'+t+'</span>';})();
 
+/* yardımcılar */
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const holo=i=>i.holo?'<i class="holo" style="left:'+i.holo[0]+'%;top:'+i.holo[1]+'%;width:'+(i.holo[2]-i.holo[0])+'%;height:'+(i.holo[3]-i.holo[1])+'%"></i>':'';
+const GL='ABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ0123456789#/<>_-+*';
+function decode(el,dur){
+  if(RM||!el)return;
+  if(el._dec)cancelAnimationFrame(el._dec);
+  const nodes=[];const w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);let n;
+  while(n=w.nextNode()){if(n._orig==null)n._orig=n.nodeValue;nodes.push(n);}
+  const total=nodes.reduce((a,x)=>a+x._orig.length,0);if(!total)return;
+  const t0=performance.now();dur=dur||Math.min(1100,380+total*30);
+  const step=now=>{
+    const p=Math.min(1,(now-t0)/dur),fixed=Math.floor(p*p*(3-2*p)*total);let k=0;
+    nodes.forEach(x=>{let o='';for(const ch of x._orig){o+=(k<fixed||ch===' '||ch==='-'||ch==='·')?ch:GL[(Math.random()*GL.length)|0];k++;}x.nodeValue=o;});
+    if(p<1)el._dec=requestAnimationFrame(step);else{nodes.forEach(x=>x.nodeValue=x._orig);el._dec=0;}
+  };
+  el._dec=requestAnimationFrame(step);
+}
+function tilt(el,target){
+  if(RM)return;target=target||el;
+  el.addEventListener('pointermove',e=>{
+    if(e.pointerType!=='mouse')return;
+    const r=el.getBoundingClientRect(),x=Math.max(0,Math.min(1,(e.clientX-r.left)/r.width)),y=Math.max(0,Math.min(1,(e.clientY-r.top)/r.height));
+    const st=target.style;st.setProperty('--ry',((x-.5)*18).toFixed(2)+'deg');st.setProperty('--rx',((.5-y)*14).toFixed(2)+'deg');
+    st.setProperty('--mx',(x*100).toFixed(1)+'%');st.setProperty('--my',(y*100).toFixed(1)+'%');
+    st.setProperty('--hx',(x*100).toFixed(1)+'%');st.setProperty('--hy',(y*100).toFixed(1)+'%');target.classList.add('live');
+  });
+  el.addEventListener('pointerleave',()=>{['--rx','--ry','--mx','--my','--hx','--hy'].forEach(k=>target.style.removeProperty(k));target.classList.remove('live');});
+}
+
 /* kartlar */
 $('grid').innerHTML=P.map(p=>{
   const st=p.img.length>1&&p.img.every(i=>i.flat)
-    ?'<div class="two">'+p.img.map(i=>'<img class="flat" src="'+A+i.s+'" alt="" loading="lazy">').join('')+'</div>'
-    :'<img'+(p.img[0].flat?' class="flat"':'')+' src="'+A+p.img[0].s+'" alt="" loading="lazy">';
+    ?'<div class="two">'+p.img.map(i=>'<span class="tw"><img class="flat" src="'+A+i.s+'" alt="" loading="lazy">'+holo(i)+'<i class="glare"></i></span>').join('')+'</div>'
+    :'<img class="'+(p.img[0].flat?'flat':'')+(p.float?' float':'')+'" src="'+A+p.img[0].s+'" alt="" loading="lazy">';
   return '<a class="card" href="#'+p.id+'" data-id="'+p.id+'" style="--c:'+p.c+'" aria-label="'+esc(p.name)+' ayrıntılarını aç">'+
     '<div class="band"><span class="n">'+p.no+' / 04</span><span class="jp">'+esc(p.jp.split(' · ')[0])+'</span></div>'+
-    '<div class="stage"><i class="corner a"></i><i class="corner b"></i><i class="corner c"></i><i class="corner d"></i>'+st+'<span class="code">'+esc(p.code)+'</span></div>'+
-    '<div class="body"><span class="cat">'+esc(p.short||p.cat.split(' · ')[0])+'</span><h2>'+esc(p.name)+'</h2><span class="line">'+esc(p.line)+'</span>'+
+    '<div class="stage"><i class="corner a"></i><i class="corner b"></i><i class="corner c"></i><i class="corner d"></i><span class="rule" aria-hidden="true"><b>'+esc(p.dim)+'</b></span><span class="vjp" aria-hidden="true">'+esc(p.jp.split(' · ')[0])+'</span>'+st+'<span class="code">'+esc(p.code)+'</span></div>'+
+    '<div class="body"><span class="cat">'+esc(p.short||p.cat.split(' · ')[0])+'</span><h2 class="dec">'+esc(p.name)+'</h2><span class="line">'+esc(p.line)+'</span>'+
     '<span class="go"><span>AYRINTIYI AÇ</span><span class="arr">▸</span></span></div></a>';
 }).join('');
 
@@ -318,12 +397,12 @@ function render(){
   dl.style.setProperty('--c',p.c);
   dl.innerHTML=
   '<div class="dh"><div class="l"><span class="mono">'+p.no+' / 04 · '+esc(p.code)+'</span><span class="jp">'+esc(p.jp)+'</span></div>'+
-  '<div class="r"><button type="button" class="ib" id="dClose" aria-label="Kapat">KAPAT [ESC] ✕</button></div></div>'+
+  '<div class="r"><button type="button" class="ib" id="dClose" aria-label="Kapat">KAPAT<span class="kf"> [ESC]</span> ✕</button></div></div>'+
   '<div class="db">'+
-   '<div class="gal"><div class="main" id="gMain" role="button" tabindex="0" aria-label="Görseli büyüt"><img'+(im.flat?' class="flat"':'')+' src="'+A+im.s+'" alt="'+esc(p.name+' · '+im.t)+'"><span class="zoomhint">BÜYÜT ⤢</span><span class="cap">'+esc(im.t)+'</span></div>'+
-   (p.img.length>1?'<div class="thumbs">'+p.img.map((x,i)=>'<button type="button" data-i="'+i+'" aria-pressed="'+(i===img)+'" aria-label="'+esc(x.t)+'"><img src="'+A+x.s+'" alt=""><span>'+esc(x.t)+'</span></button>').join('')+'</div>':'')+
+   '<div class="gal"><div class="main" id="gMain" role="button" tabindex="0" aria-label="Görseli büyüt"><span class="vjp" aria-hidden="true">'+esc(p.jp.split(' · ')[0])+'</span>'+media(p)+'<span class="zoomhint">BÜYÜT ⤢</span><span class="cap" id="gCap">'+esc(im.t)+'</span></div>'+
+   (p.img.length>1?'<div class="thumbs">'+p.img.map((x,i)=>'<button type="button" data-i="'+i+'" aria-pressed="'+(i===img)+'" aria-label="'+esc(x.t)+'"><img src="'+A+x.s+'" alt=""><span>'+esc(x.t)+'</span></button>').join('')+(p.flip?'<button type="button" class="flipk" id="gFlipB">ÇEVİR ⟲<span class="kf"> [F]</span></button>':'')+'</div>':'')+
    '</div>'+
-   '<div class="info"><span class="cat">'+esc(p.cat)+'</span><h2 id="dTitle">'+esc(p.name)+'</h2><div class="tag">'+esc(p.tag)+'</div>'+
+   '<div class="info"><span class="cat">'+esc(p.cat)+'</span><h2 id="dTitle" class="dec">'+esc(p.name)+'</h2><div class="tag">'+esc(p.tag)+'</div>'+
    p.desc.map(d=>'<p>'+esc(d)+'</p>').join('')+
    '<dl class="kv">'+p.kv.map(k=>'<div><dt>'+esc(k[0])+'</dt><dd>'+esc(k[1])+'</dd></div>').join('')+'</dl>'+
    '<div class="warnl"><b>⚠ UYARI</b><span>'+esc(p.warn)+'</span></div>'+
@@ -335,11 +414,26 @@ function render(){
   $('dClose').onclick=()=>close(true);
   $('dPrev').onclick=()=>go(-1);$('dNext').onclick=()=>go(1);
   const gm=$('gMain');gm.onclick=zoom;gm.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();zoom();}};
-  dl.querySelectorAll('.thumbs button').forEach(b=>b.onclick=()=>{img=+b.dataset.i;render();dl.querySelector('.thumbs button[data-i="'+img+'"]').focus();});
+  dl.querySelectorAll('.thumbs button[data-i]').forEach(b=>b.onclick=()=>setFace(+b.dataset.i,true));
+  if($('gFlipB'))$('gFlipB').onclick=()=>setFace(img?0:1,false);
+  tilt(gm,$('gTw'));
+}
+function media(p){
+  const im=p.img[img];
+  if(p.flip){const f=p.img[0],b=p.img[1];
+    return '<div class="tw" id="gTw"><div class="fl'+(img?' back':'')+'" id="gFl"><img class="f0 flat" src="'+A+f.s+'" alt="'+esc(p.name+' · '+f.t)+'"><div class="f1"><img src="'+A+b.s+'" alt="'+esc(p.name+' · '+b.t)+'">'+holo(b)+'</div></div><i class="glare"></i></div>';}
+  return '<div class="tw" id="gTw"><img class="'+(im.flat?'flat':'')+(p.float&&!im.flat?' float':'')+'" src="'+A+im.s+'" alt="'+esc(p.name+' · '+im.t)+'">'+(im.flat?'<i class="glare"></i>':'')+'</div>';
+}
+function setFace(i,focus){
+  const p=P[cur];if(i===img&&!p.flip)return;img=i;
+  if(p.flip){$('gFl').classList.toggle('back',img===1);$('gCap').textContent=p.img[img].t;
+    dl.querySelectorAll('.thumbs button[data-i]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===img)));
+    if(focus)dl.querySelector('.thumbs button[data-i="'+img+'"]').focus();}
+  else{render();if(focus)dl.querySelector('.thumbs button[data-i="'+img+'"]').focus();}
 }
 function open(i,push){
   if(cur<0)lastFocus=document.activeElement;
-  cur=i;img=0;render();
+  cur=i;img=0;render();decode($('dTitle'),650);
   ov.classList.add('on');ov.setAttribute('aria-hidden','false');document.body.classList.add('lock');
   dl.querySelectorAll('.db,.info').forEach(e=>e.scrollTop=0);$('dClose').focus();
   const h='#'+P[i].id;if(push&&location.hash!==h)history.pushState(null,'',h);
@@ -356,7 +450,10 @@ function go(d){open((cur+d+P.length)%P.length,false);history.replaceState(null,'
 function zoom(){const p=P[cur],z=$('zoom');z.querySelector('img').src=A+p.img[img].s;z.querySelector('img').alt=p.name+' · '+p.img[img].t;z.classList.add('on');}
 function fromHash(){const i=P.findIndex(p=>'#'+p.id===location.hash);i>=0?open(i,false):close(false);}
 
-document.querySelectorAll('.card').forEach(c=>c.addEventListener('click',e=>{e.preventDefault();open(P.findIndex(p=>p.id===c.dataset.id),true);}));
+document.querySelectorAll('.card').forEach(c=>{c.addEventListener('click',e=>{e.preventDefault();open(P.findIndex(p=>p.id===c.dataset.id),true);});tilt(c);});
+decode(document.querySelector('.hero h1'),1100);
+if('IntersectionObserver' in window){const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){decode(en.target.querySelector('h2'),700);io.unobserve(en.target);}}),{threshold:.35});document.querySelectorAll('.card').forEach(c=>io.observe(c));}
+(()=>{const mk=$('mk'),ry=$('ry');let raf=0;const upd=()=>{raf=0;const max=Math.max(1,document.documentElement.scrollHeight-innerHeight),pc=Math.min(1,scrollY/max);mk.style.top='calc('+(pc*100)+'% - 1px)';ry.style.top='calc('+(pc*100)+'% + 8px)';ry.textContent='Y '+String(Math.round(scrollY)).padStart(4,'0');if(pc>.85)ry.style.top='calc('+(pc*100)+'% - 70px)';};addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(upd);},{passive:true});upd();})();
 ov.addEventListener('click',e=>{if(e.target===ov)close(true);});
 $('zoom').addEventListener('click',()=>$('zoom').classList.remove('on'));
 window.addEventListener('popstate',fromHash);
@@ -367,6 +464,7 @@ document.addEventListener('keydown',e=>{
     if(e.key==='Escape')close(true);
     else if(e.key==='ArrowRight')go(1);
     else if(e.key==='ArrowLeft')go(-1);
+    else if((e.key==='f'||e.key==='F')&&P[cur].flip&&!e.metaKey&&!e.ctrlKey)setFace(img?0:1,false);
     else if(e.key==='Tab'){const f=[...dl.querySelectorAll('button,a,[tabindex="0"]')];if(!f.length)return;
       if(e.shiftKey&&document.activeElement===f[0]){e.preventDefault();f[f.length-1].focus();}
       else if(!e.shiftKey&&document.activeElement===f[f.length-1]){e.preventDefault();f[0].focus();}}
