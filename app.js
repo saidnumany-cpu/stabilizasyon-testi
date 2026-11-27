@@ -329,14 +329,14 @@ const SCAN={
     sum:()=>[['GÜZERGÂH',rtStr(cur.route)],['SEFER',cur.dep+' → '+cur.arr],['VARIŞ SEKTÖRÜ',secLabel(cur.route[1])],['AĞ','TRANS-METRO ORBITAL NETWORKS']],
     done:'Özgün transit belgesi OCR ile okundu · 9/9 alan kayıtla eşleşti'},
   1:{title:'PERSONEL ERİŞİM KARTI',jp:'制限区域 · OCR',h:560,faces:[
-    {t:'ÖN YÜZ',img:'assets/urunler/kimlik-on.webp',f:[
+    {t:'ÖN YÜZ',img:'assets/urunler/kimlik-on-v2.webp',f:[
       ['AD SOYAD','SAİD NUMAN YÜCEL',[6,43.5,72,48.2]],
       ['PERSONEL KODU','DZC-8109-SNY',[6,48.3,75,51.6]],
       ['DEPARTMAN','SİSMİK KALİBRASYON VE ALTYAPI',[6,67,86,71.8]],
       ['GÖREV','BAŞ TEKNİKER / FAZ-2',[6,75.3,50,79.8]],
       ['YETKİ DÜZEYİ','SEVİYE 4 · KISITLI BÖLGE',[6,83.6,82,88]],
       ['GEÇERLİLİK','2099.11.04 – 2101.11.03',[6,91.5,58,96]]]},
-    {t:'ARKA YÜZ',img:'assets/urunler/kimlik-arka.webp',f:[
+    {t:'ARKA YÜZ',img:'assets/urunler/kimlik-arka-v2.webp',f:[
       ['BASELINE DURUMU','STABİL · 0.0034',[7,3.5,70,8.3]],
       ['KAN GRUBU / TAKVİYE','A Rh+ · AKTİF',[7,11.2,76,16.3]],
       ['SİSTEM SERİ NO','SYS-8489-SNY-990',[7,18.8,44,24]],
