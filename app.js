@@ -122,10 +122,18 @@ const NAMED={
   MUNTEHA:named('MÜNTEHA BÜŞRA YÜCEL',{num:'2412',dept:'BİYOMETRİK KAYIT BİRİMİ',gorev:'BİYOMETRİ UZMANI / FAZ-2',yetki:'SEVİYE 3 · KAYIT',dev:.0068,route:['BRS-16','ANK-06']})
 };
 NAMED.SAID.photo=false;
-let upcoming=[ARAS,NAMED.SERRA,gen(),NAMED.FURKAN,NAMED.YAKUP,gen(),NAMED.EMIRHAN,NAMED.TARIK,gen(),NAMED.ILKER,NAMED.ALMEDIN,NAMED.MUNTEHA,gen()];
+/* basılı bilet + kimlik kartıyla birebir eşleşen yolcu (özgün belgeler taranır) */
+const SAID={id:'DZC-8109-SNY',name:'SAİD NUMAN YÜCEL',short:'YÜCEL, SAİD N.',given:'SAİD NUMAN',sur:'YÜCEL',photo:true,
+  img:'assets/yolcu/said-numan-yucel.webp',sigTxt:'Sny',docs:true,named:true,
+  dept:'SİSMİK KALİBRASYON VE ALTYAPI DENETİMİ',
+  fields:[['GÖREV','BAŞ TEKNİKER / FAZ-2'],['YETKİ DÜZEYİ','SEVİYE 4 · KISITLI BÖLGE'],['KAN GRUBU','A Rh+'],['SENTETİK TAKVİYE','AKTİF'],['SİSTEM SERİ NO','SYS-8489-ARV-990'],['GEÇERLİLİK','2099.11.04 – 2101.11.03']],
+  zones:[1,-1,1,0,1,1,-1,-1],dev:.0034,face:98.6,route:['DZC-81','IST-34'],dep:'17.50',arr:'18.20',
+  mrz:mkMrz('SAİD NUMAN','YÜCEL','DZC-8109-SNY','20991104M21011103'),nx:0,rations:3};
+const rtStr=r=>r[0]==='DZC-81'?'DZC-81 → '+r[1]:r[0]+' → DZC-81 → '+r[1];
+const rtShort=r=>r[0]==='DZC-81'?'DZC-81 → '+r[1]:r[0]+' → DZC-81';
+let upcoming=[ARAS,SAID,NAMED.SERRA,gen(),NAMED.FURKAN,NAMED.YAKUP,gen(),NAMED.EMIRHAN,NAMED.TARIK,gen(),NAMED.ILKER,NAMED.ALMEDIN,NAMED.MUNTEHA,gen()];
 let history=[
-  {t:'17:46:12',s:NAMED.SAID,label:'YÜCEL, SAİD N. · IST-34',tag:'GEÇTİ',dev:.0041},
-  ...[['17:47:40','RET',.0712],['17:48:18','NEXUS-X',.0288],['17:48:55','BEKLET',.0235]].map(([t,tag,dev])=>{const g=gen();return{t,s:g,label:g.short+' · '+g.id.slice(0,8),tag,dev};})];
+  ...[['17:46:12','GEÇTİ',.0087],['17:47:40','RET',.0712],['17:48:18','NEXUS-X',.0288],['17:48:55','BEKLET',.0235]].map(([t,tag,dev])=>{const g=gen();return{t,s:g,label:g.short+' · '+g.id.slice(0,8),tag,dev};})];
 let cnt={pass:1207,ret:38,hold:61,nx:23,wait:14};
 let cur=null,devTarget=0,devShown=0,step=0,testDone=false,decision=30,nexusLoad=0,busy=false,nxApplied=0,phase=0,paused=false,started=false,modalOpen=false,modalPrimary=null,lastAlarmFor=null;
 
@@ -175,7 +183,7 @@ function renderId(){
   $('name').textContent=cur.name;$('pid').textContent=cur.id;$('dept').textContent=cur.dept;
   $('face').textContent=fmt(cur.face,1);
   $('photo').src=window.DZCPortrait(cur);$('photo').alt=cur.name+' vesikalık';$('photo').style.display='block';$('silh').style.display='none';
-  const sg=$('sig');if(cur.photo){sg.classList.remove('svgsig');sg.textContent='Arv';}else{sg.classList.add('svgsig');sg.innerHTML=window.DZCSignature(cur);}
+  const sg=$('sig');if(cur.photo){sg.classList.remove('svgsig');sg.textContent=cur.sigTxt||'Arv';}else{sg.classList.add('svgsig');sg.innerHTML=window.DZCSignature(cur);}
   $('fields').innerHTML='';
   cur.fields.forEach(([k,v])=>{const d=document.createElement('div');d.className='field';d.innerHTML='<span class="k"></span><span class="v"></span>';d.children[0].textContent=k;d.children[1].textContent=v;$('fields').appendChild(d);});
   $('mrz').textContent=cur.mrz;
@@ -183,7 +191,7 @@ function renderId(){
   for(let i=0;i<56;i++){seed=(seed*73+17)%9973;const b=document.createElement('div');b.style.cssText='height:30px;width:'+(1+seed%3)+'px;margin-right:'+(1+(seed>>2)%3)+'px;background:'+(i<32?C.fg:C.red);bc.appendChild(b);}
   $('barTxt').textContent=TR2A(cur.given).replace(/ /g,'');const sp=document.createElement('span');sp.style.color=C.rl;sp.textContent=TR2A(cur.sur);$('barTxt').appendChild(sp);
   renderZones();
-  $('route').textContent=cur.route[0]+' → DZC-81 → '+cur.route[1];$('times').textContent=cur.dep+' → '+cur.arr;
+  $('route').textContent=rtStr(cur.route);$('times').textContent=cur.dep+' → '+cur.arr;
   $('pending').textContent=cur.id+' · '+cur.short;
   $('sess').textContent=cur.id.slice(4,8)+'-C';$('baseRef').textContent=cur.photo?'SYS-8489':cur.fields[4][1].slice(0,8);
 }
@@ -216,8 +224,8 @@ function renderQueue(){
 function docState(s){
   const nx=!testDone?'BEKLENİYOR':(s.k==='s'?'STOKTA · GEREKMİYOR':(s.k==='d'?'HAZIRLANDI · 1 BİRİM':'ZORUNLU UYGULAMA'));
   return [
-    ['BİLET','軌道運行',C.cy,'Merkezi Transit Geçiş Belgesi',cur.route[0]+' → DZC-81 · '+cur.dep+'/'+cur.arr,'DOĞRULANDI',C.cy],
-    ['KİMLİK','制限区域',C.red,'Personel Erişim Kartı',cur.id+' · '+cur.fields[1][1].split(' · ')[0],'承認 MÜHÜR GEÇERLİ',C.cy],
+    ['BİLET','軌道運行',C.cy,'Merkezi Transit Geçiş Belgesi',rtShort(cur.route)+' · '+cur.dep+'/'+cur.arr,cur.docs?'ÖZGÜN BELGE · OCR':'DOĞRULANDI',C.cy],
+    ['KİMLİK','制限区域',C.red,'Personel Erişim Kartı',cur.id+' · '+cur.fields[1][1].split(' · ')[0],cur.docs?'ÖZGÜN KART · 承認':'承認 MÜHÜR GEÇERLİ',C.cy],
     ['NEXUS-X','ネクサス',C.pk,'Nöro Stabilizatör','HASAT KODU DZ-99 · '+nxApplied+' UYG.',nx,testDone?s.c:C.mu],
     ['SYNTEX-81','合成',C.or,'Sentetik Protein Rasyonu','HASAT KODU DZ-21 · %88,4','TÜKETİLDİ '+cur.rations+'/3',cur.rations<3?C.am:C.cy]
   ];
@@ -269,18 +277,19 @@ const kv=pairs=>'<div class="kv">'+pairs.map(([k,v,c])=>'<div><span class="k">'+
 
 function openDoc(i){
   const s=status(devShown);
+  if(cur.docs&&i<2){scanDoc(i);return;}
   if(i===0){
     openModal('MERKEZİ TRANSİT GEÇİŞ BELGESİ','軌道運行システム',
       '<div class="band" style="background:var(--or)"><span class="jp" style="font-size:30px">軌道運行システム</span><span class="disp" style="font-weight:900;font-size:26px">'+esc(cur.route[0])+'</span></div>'+
       '<div class="band" style="background:var(--cy)"><span class="jp" style="font-size:24px">制限区域 · 承認</span><span class="disp" style="font-weight:900;font-size:26px">DZC-81</span></div>'+
-      kv([['YOLCU',cur.name],['PERSONEL KODU',cur.id],['KALKIŞ',cur.dep],['VARIŞ',cur.arr],['KALKIŞ SEKTÖRÜ',secLabel(cur.route[0])],['VARIŞ SEKTÖRÜ',secLabel(cur.route[1])],['GÜZERGÂH',cur.route[0]+' → DZC-81 → '+cur.route[1]],['OCR DOĞRULAMA','K06-3.7 · GEÇERLİ',C.cy]])+
+      kv([['YOLCU',cur.name],['PERSONEL KODU',cur.id],['KALKIŞ',cur.dep],['VARIŞ',cur.arr],['KALKIŞ SEKTÖRÜ',secLabel(cur.route[0])],['VARIŞ SEKTÖRÜ',secLabel(cur.route[1])],['GÜZERGÂH',rtStr(cur.route)],['OCR DOĞRULAMA','K06-3.7 · GEÇERLİ',C.cy]])+
       '<div class="micro">Bu transit geçiş belgesi sadece sisteme kayıtlı bireyler için geçerlidir ve DZC-81 ağı katı güvenlik protokollerine tabidir. İzinsiz bölge değişimi veya sahte kimlik kullanımı tespit edildiğinde belge derhal iptal edilecektir. 警告:システム違反 durumunda cezai işlem uygulanacaktır. SYS-CHK-99.8 &gt;&gt; AUTH: 10938-X &gt;&gt; TRANS-METRO ORBITAL NETWORKS</div>',
       [{label:'KAPAT',kind:'ghost'},{label:'SEFERİ YENİDEN SORGULA',kind:'primary',primary:true,fn:()=>{log('OK','Sefer '+cur.dep+' '+cur.route[0]+'→DZC-81 yeniden sorgulandı · geçerli');toast('SEFER KAYDI GEÇERLİ',C.cy);SFX.ok();}}]);
   }else if(i===1){
     openModal('PERSONEL ERİŞİM KARTI','制限区域',
       '<div style="display:flex;gap:18px;align-items:center"><div style="width:120px;height:120px;border-radius:50%;border:4px solid var(--red);overflow:hidden;flex:none;background:#1A1D22">'+'<img src="'+window.DZCPortrait(cur)+'" alt="" style="width:100%;height:100%;object-fit:cover;filter:grayscale(1)">'+'</div><div style="display:flex;flex-direction:column;gap:4px"><span class="disp" style="font-weight:800;font-size:30px">'+esc(cur.name)+'</span><span class="mono" style="color:var(--rl);font-size:14px;letter-spacing:1.5px">PERSONEL KODU: '+esc(cur.id)+'</span><span style="font-weight:600">'+esc(cur.dept)+'</span></div></div>'+
       kv(cur.fields.map(f=>[f[0],f[1]]).concat([['BASELINE DURUMU',s.t+' // KALİBRASYON: '+devShown.toFixed(4),s.c],['YÜZ EŞLEŞME',fmt(cur.face,1)+'%']]))+
-      '<div class="sigLine"><span class="lbl">BİYOMETRİK İMZA · '+esc(cur.id)+'</span>'+(cur.photo?'<span class="sigArv">Arv</span>':window.DZCSignature(cur,'big'))+'</div>'+
+      '<div class="sigLine"><span class="lbl">BİYOMETRİK İMZA · '+esc(cur.id)+'</span>'+(cur.photo?'<span class="sigArv">'+esc(cur.sigTxt||'Arv')+'</span>':window.DZCSignature(cur,'big'))+'</div>'+
       '<pre class="mono" style="margin:0;background:#111318;border-left:6px solid var(--red);padding:10px 12px;font-size:14px;letter-spacing:1.3px">'+esc(cur.mrz)+'</pre>'+
       '<div class="micro">Bu kimlik kartı DZC-81 otoritesinin mülkiyetindedir. Yalnızca yetkili personelin kullanımına açıktır. Birbiriyle bağlantılı hücreler sistemi protokolü gereğince kart sahibinin zihinsel stabilizasyon ve temel çizgi testi doğrulaması periyodik olarak yapılmaktadır. İzinsiz kullanım kimliğin anında iptaline yol açar.</div>',
       [{label:'KAPAT',kind:'ghost'},{label:'BİYOMETRİK YENİDEN TARAMA',kind:'primary',primary:true,fn:()=>{cur.face=Math.min(99.8,cur.face+rnd(.1,.8));$('face').textContent=fmt(cur.face,1);log('OK','Yüz yeniden tarandı · eşleşme '+fmt(cur.face,1)+'%');toast('YÜZ EŞLEŞME '+fmt(cur.face,1)+'%',C.cy);SFX.ok();}}]);
@@ -303,6 +312,81 @@ function openDoc(i){
         renderNexus();paintStatus();SFX.ok();}}]);
   }
 }
+/* ================= özgün belge taraması (basılı bilet + kimlik) ================= */
+const SCAN={
+  0:{title:'MERKEZİ TRANSİT GEÇİŞ BELGESİ',jp:'軌道運行システム · OCR',h:560,faces:[
+    {t:'ÖN YÜZ',img:'assets/urunler/bilet-on.webp',f:[
+      ['HAT KODU','IST-34',[50,29.6,89,33.2]],
+      ['DÜĞÜM','DZC-81 · 制限区域 承認',[50,48.6,89,52.2]],
+      ['KALKIŞ','17.50',[27,59.8,60.5,66]],
+      ['VARIŞ','18.20',[60.5,59.8,93,66]],
+      ['YOLCU','SAİD NUMAN YÜCEL · DZC-81',[6,76,92,84.5]],
+      ['DONANIM SERİ NO','8489-AXX-990',[5,92.2,26.5,94.4]]]},
+    {t:'ARKA YÜZ · ŞEHİR BİLGİSİ',img:'assets/urunler/bilet-arka.webp',f:[
+      ['SEKTÖR GÖRSELİ','DZC-81 HUB · NEO-İSTANBUL',[7,10,93,20.3]],
+      ['SEKTÖR METNİ','IST–ANK KORİDORU · ANA TRANSİT DÜĞÜM',[6,22.3,94,66.8]],
+      ['DOĞRULAMA BLOĞU','K06-3.7 · KALİBRASYON 0.0034',[6,82,94,97.5]]]}],
+    sum:()=>[['GÜZERGÂH',rtStr(cur.route)],['SEFER',cur.dep+' → '+cur.arr],['VARIŞ SEKTÖRÜ',secLabel(cur.route[1])],['AĞ','TRANS-METRO ORBITAL NETWORKS']],
+    done:'Özgün transit belgesi OCR ile okundu · 9/9 alan kayıtla eşleşti'},
+  1:{title:'PERSONEL ERİŞİM KARTI',jp:'制限区域 · OCR',h:560,faces:[
+    {t:'ÖN YÜZ',img:'assets/urunler/kimlik-on.webp',f:[
+      ['AD SOYAD','SAİD NUMAN YÜCEL',[6,43.5,72,48.2]],
+      ['PERSONEL KODU','DZC-8109-SNY',[6,48.3,75,51.6]],
+      ['DEPARTMAN','SİSMİK KALİBRASYON VE ALTYAPI',[6,67,86,71.8]],
+      ['GÖREV','BAŞ TEKNİKER / FAZ-2',[6,75.3,50,79.8]],
+      ['YETKİ DÜZEYİ','SEVİYE 4 · KISITLI BÖLGE',[6,83.6,82,88]],
+      ['GEÇERLİLİK','2099.11.04 – 2101.11.03',[6,91.5,58,96]]]},
+    {t:'ARKA YÜZ',img:'assets/urunler/kimlik-arka.webp',f:[
+      ['BASELINE DURUMU','STABİL · 0.0034',[7,3.5,70,8.3]],
+      ['KAN GRUBU / TAKVİYE','A Rh+ · AKTİF',[7,11.2,76,16.3]],
+      ['SİSTEM SERİ NO','SYS-8489-ARV-990',[7,18.8,44,24]],
+      ['HOLOGRAM MÜHÜR','承認 · GEÇERLİ',[11,32.5,71,71]]]}],
+    sum:()=>[['YÜZ EŞLEŞME',fmt(cur.face,1)+'%'],['BİYOMETRİK İMZA',cur.sigTxt||'—']],
+    done:'Özgün personel kartı OCR ile okundu · 10/10 alan kayıtla eşleşti'}
+};
+let scanTok=0;
+function scanDoc(i){
+  const c=SCAN[i],tok=++scanTok,total=c.faces.reduce((a,f)=>a+f.f.length,0);
+  let face=0,read=0;
+  const rows=c.faces.map((fc,fi)=>'<div class="scGrp mono">'+esc(fc.t)+'</div>'+fc.f.map((f,j)=>'<div class="scRow" id="scR'+fi+'_'+j+'"><span class="scK">'+esc(f[0])+'</span><span class="scV">'+esc(f[1])+'</span><span class="scS">BEKLİYOR</span></div>').join('')).join('');
+  openModal(c.title,c.jp,
+    '<div class="scan"><div class="scFig">'+
+      '<div class="scTabs">'+c.faces.map((f,fi)=>'<button type="button" class="ctl" data-f="'+fi+'" aria-pressed="'+(fi===0)+'" disabled>'+esc(f.t.split(' · ')[0])+'</button>').join('')+'</div>'+
+      '<div class="scImg"><img id="scImg" src="'+c.faces[0].img+'" alt="'+esc(c.title+' · '+c.faces[0].t)+'" style="height:'+c.h+'px"><div id="scBoxes"></div><div class="scLine" id="scLine"></div></div>'+
+    '</div><div class="scSide">'+
+      '<div class="scHead"><span class="mono">OCR K06-3.7 · ÖZGÜN BELGE</span><span class="mono" id="scState" style="color:var(--am)">TARANIYOR…</span></div>'+
+      '<div class="scBar"><div id="scProg"></div></div>'+
+      '<div class="scRows">'+rows+'</div>'+kv(c.sum())+
+    '</div></div>',
+    [{label:'KAPAT',kind:'ghost'},{label:'YENİDEN TARA',kind:'primary',primary:true,fn:()=>scanDoc(i)}],{wide:true});
+  const alive=()=>tok===scanTok&&modalOpen&&$('scImg');
+  const boxes=fi=>{$('scBoxes').innerHTML=c.faces[fi].f.map((f,j)=>{const b=f[2];return '<div class="scBox'+($('scR'+fi+'_'+j).classList.contains('on')?' on':'')+'" id="scB'+fi+'_'+j+'" style="left:'+b[0]+'%;top:'+b[1]+'%;width:'+(b[2]-b[0])+'%;height:'+(b[3]-b[1])+'%"><span>'+esc(f[0])+'</span></div>';}).join('');};
+  const show=fi=>{face=fi;const im=$('scImg');im.src=c.faces[fi].img;im.alt=c.title+' · '+c.faces[fi].t;
+    document.querySelectorAll('.scTabs .ctl').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.f===fi)));boxes(fi);};
+  document.querySelectorAll('.scTabs .ctl').forEach(b=>b.onclick=()=>{SFX.click();show(+b.dataset.f);});
+  const mark=(fi,j)=>{read++;$('scR'+fi+'_'+j).classList.add('on');$('scR'+fi+'_'+j).querySelector('.scS').textContent='✓ EŞLEŞTİ';
+    const bx=$('scB'+fi+'_'+j);if(bx)bx.classList.add('on');$('scProg').style.width=(read/total*100)+'%';SFX.step();};
+  const run=fi=>{
+    if(!alive())return;show(fi);
+    c.faces[fi].f.forEach((f,j)=>$('scR'+fi+'_'+j).querySelector('.scS').textContent='OKUNUYOR');
+    const line=$('scLine'),order=c.faces[fi].f.map((f,j)=>[(f[2][1]+f[2][3])/2,j]).sort((a,b)=>a[0]-b[0]);
+    const D=2400,t0=performance.now();let k=0;line.style.opacity='1';
+    const tick=now=>{
+      if(!alive())return;
+      const p=Math.min(1,(now-t0)/D),y=p*100;line.style.top=y+'%';
+      while(k<order.length&&order[k][0]<=y){mark(fi,order[k][1]);k++;}
+      if(p<1){requestAnimationFrame(tick);return;}
+      line.style.opacity='0';
+      if(fi+1<c.faces.length)setTimeout(()=>run(fi+1),450);
+      else setTimeout(()=>{if(!alive())return;show(0);
+        $('scState').textContent=read+'/'+total+' ALAN EŞLEŞTİ ✓';$('scState').style.color=C.cy;
+        document.querySelectorAll('.scTabs .ctl').forEach(b=>b.disabled=false);
+        log('OK',c.done);toast(read+'/'+total+' ALAN EŞLEŞTİ · ÖZGÜN BELGE',C.cy);SFX.ok();},350);
+    };
+    requestAnimationFrame(tick);
+  };
+  setTimeout(()=>run(0),250);
+}
 function openZone(i){
   const [c]=ZN[i],m=cur.zones[i],inf=ZINFO[c];
   const st=m===1?['AÇIK',C.cy]:m===0?['KOŞULLU · AMİR ONAYI',C.am]:['KAPALI',C.rd];
@@ -324,7 +408,7 @@ function openRecord(h){
 function openUpcoming(i){
   const u=upcoming[i];
   openModal('SIRADAKİ DENEK · '+u.id,'待機',
-    face(u,C.mu)+kv([['AD SOYAD',u.name],['DEPARTMAN',u.dept],['GÜZERGÂH',u.route[0]+' → DZC-81 → '+u.route[1]],['VARIŞ SEKTÖRÜ',secLabel(u.route[1])],['SEFER',u.dep+' → '+u.arr],['YETKİ',u.fields[1][1]],['ÖN TARAMA','BEKLENİYOR',C.mu]]),
+    face(u,C.mu)+kv([['AD SOYAD',u.name],['DEPARTMAN',u.dept],['GÜZERGÂH',rtStr(u.route)],['VARIŞ SEKTÖRÜ',secLabel(u.route[1])],['SEFER',u.dep+' → '+u.arr],['YETKİ',u.fields[1][1]],['ÖN TARAMA','BEKLENİYOR',C.mu]]),
     [{label:'KAPAT',kind:'ghost'},...(i>0?[{label:'SIRADA ÖNE AL',kind:'primary',primary:true,fn:()=>{upcoming.unshift(upcoming.splice(i,1)[0]);renderQueue();log('SYS',u.id+' sırada öne alındı');toast('SIRA GÜNCELLENDİ',C.cy);SFX.click();}}]:[])]);
 }
 const secLabel=c=>{const s=window.DZCSectors.get(c);return s?c+' · '+s.name:c;};
@@ -373,7 +457,7 @@ function advance(){
   if(!started||busy||testDone||paused||modalOpen)return;
   step++;SFX.step();
   if(step===1)log('OK','MRZ sağlama [06] geçerli · OCR K06-3.7');
-  if(step===2)log('OK','Yüz eşleşme '+fmt(cur.face,1)+'% · bilet '+cur.route[0]+'→DZC-81 doğrulandı');
+  if(step===2)log('OK','Yüz eşleşme '+fmt(cur.face,1)+'% · bilet '+rtShort(cur.route).replace(/ /g,'')+' doğrulandı');
   if(step===3)log('SYS','Baseline kaydı yüklendi · '+cur.fields[4][1]);
   if(step===4)log('SYS','Uyaran 05 iletildi · yanıt bekleniyor');
   if(step===5)log('SYS','Çapraz sorgu: SYNTEX-81 DZ-21 · Nexus-X DZ-99');
