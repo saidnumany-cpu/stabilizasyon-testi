@@ -139,7 +139,6 @@ function draw(sub){
 
 window.DZCPortrait=function(sub){
   if(!sub)return '';
-  if(sub.photo)return 'assets/aras-kaan-vardar.jpg';
   const k=sub.id||sub.name;
   if(!cache.has(k)){try{cache.set(k,draw(sub));}catch(e){cache.set(k,'');}}
   return cache.get(k);
