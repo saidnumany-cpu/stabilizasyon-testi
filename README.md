@@ -1,6 +1,6 @@
 # DZC-81 · Stabilizasyon Testi
 
-**2099 Sistem Evreni** için tasarlanmış tek ekran denetim arayüzü — *Yazı ve Tipografi* vize projesi, Ürün 05.
+**Homeostaz** evreni için tasarlanmış tek ekran denetim arayüzü — *Yazı ve Tipografi* vize projesi, Ürün 05.
 
 DZC-81 Geçiş ve Kontrol Düğümü'ndeki görevlilerin kullandığı terminal: transit geçiş yapan personelin kimlik/yetki verilerini, Temel Çizgi Testi (biyometrik stabilizasyon) sonuçlarını, Nexus-X nöro-stabilizasyon protokolünü ve altyapı kayıtlarını eşzamanlı işler. Seyahat bileti, kimlik kartı, Nexus-X ambalajı ve SYNTEX-81 afişindeki veriler arayüzün içinde çapraz doğrulanır.
 

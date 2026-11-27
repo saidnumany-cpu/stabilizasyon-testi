@@ -1,5 +1,5 @@
 /* DZC-81 · Sektör Ağı
-   2099 Sistem Evreni'nde şehir adları silinmiştir; her il KISALTMA-PLAKA koduyla
+   Homeostaz evreninde şehir adları silinmiştir; her il KISALTMA-PLAKA koduyla
    yönetilen bir sektördür. "Eski ad" yalnızca arşiv kaydı olarak tutulur. */
 (function(){
 'use strict';

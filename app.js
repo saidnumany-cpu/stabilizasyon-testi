@@ -336,7 +336,7 @@ function openSectors(focus){
   const traffic=c=>{let h=0;for(const ch of c)h=(h*33+ch.charCodeAt(0))%997;return 40+h%380;};
   openModal('SEKTÖR AĞI · 81 KOD','区域網',
     '<div class="secTop"><div id="secCard" class="secCard"></div><div class="secTools"><label class="lbl" for="secQ">SEKTÖR ARA · KOD, PLAKA VEYA ARŞİV ADI</label><input id="secQ" class="secQ" type="search" autocomplete="off" placeholder="örn. IZM, 61, Trabzon"><div id="secTypes" class="secTypes"></div></div></div>'+
-    '<div class="micro">2099 Sistem Evreni\'nde şehir adları silinmiştir. Tüm seyahat, kargo ve insan akışı KISALTMA-PLAKA koduyla yönetilir; eski adlar yalnızca arşiv kaydıdır. Vurgulanan sektörler işlemdeki deneğin güzergâhıdır.</div>'+
+    '<div class="micro">Homeostaz evreninde şehir adları silinmiştir. Tüm seyahat, kargo ve insan akışı KISALTMA-PLAKA koduyla yönetilir; eski adlar yalnızca arşiv kaydıdır. Vurgulanan sektörler işlemdeki deneğin güzergâhıdır.</div>'+
     '<div id="secGrid" class="secGrid" role="list"></div>',
     [{label:'KAPAT',kind:'ghost'}],{wide:true});
   let ftype='TÜMÜ',sel=focus||(cur?cur.route[0]:'DZC-81');
