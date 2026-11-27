@@ -199,9 +199,11 @@ background:linear-gradient(115deg,transparent 22%,rgba(255,60,200,.6) 36%,rgba(6
 @keyframes holo{from{background-position:0% 0%}to{background-position:100% 100%}}
 img.float{animation:float 5.5s ease-in-out infinite}
 @keyframes float{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -9px;rotate:-1.2deg}}
-.fl{position:relative;transform:perspective(1100px) rotateY(0deg);transition:transform .26s cubic-bezier(.45,0,.55,1)}
-.fl.turn{transform:perspective(1100px) rotateY(90deg)}
-.fl.turn.out{transform:perspective(1100px) rotateY(-90deg);transition:none}
+.fl{position:relative;transform:perspective(1400px) rotateY(0deg) scale(1);transition:transform .34s cubic-bezier(.15,.75,.3,1)}
+.fl.turn{transform:perspective(1400px) rotateY(90deg) scale(.97);transition:transform .22s cubic-bezier(.6,0,.9,.45)}
+.fl .glare{z-index:2}
+.fl.turn .glare,.fl.out .glare{opacity:0!important;transition:none}
+.fl.turn.out{transform:perspective(1400px) rotateY(-90deg) scale(.97);transition:none}
 .fl .f1{position:absolute;inset:0;visibility:hidden}
 .fl.back .f1{visibility:visible}
 .fl.back .f0{visibility:hidden}
@@ -428,7 +430,7 @@ function render(){
 function media(p){
   const im=p.img[img];
   if(p.flip){const f=p.img[0],b=p.img[1];
-    return '<div class="tw" id="gTw"><div class="fl'+(img?' back':'')+'" id="gFl"><img class="f0 flat" src="'+A+f.s+'" alt="'+esc(p.name+' · '+f.t)+'"><div class="f1"><img src="'+A+b.s+'" alt="'+esc(p.name+' · '+b.t)+'">'+holo(b)+'</div></div><i class="glare"></i></div>';}
+    return '<div class="tw" id="gTw"><div class="fl'+(img?' back':'')+'" id="gFl"><img class="f0 flat" src="'+A+f.s+'" alt="'+esc(p.name+' · '+f.t)+'"><div class="f1"><img src="'+A+b.s+'" alt="'+esc(p.name+' · '+b.t)+'">'+holo(b)+'</div><i class="glare"></i></div></div>';}
   return '<div class="tw" id="gTw"><img class="'+(im.flat?'flat':'')+(p.float&&!im.flat?' float':'')+'" src="'+A+im.s+'" alt="'+esc(p.name+' · '+im.t)+'">'+(im.flat?'<i class="glare"></i>':'')+'</div>';
 }
 function setFace(i,focus){
@@ -437,7 +439,7 @@ function setFace(i,focus){
     if(RM)fl.classList.toggle('back',b);
     else{clearTimeout(fl._t1);clearTimeout(fl._t2);fl.classList.remove('out');fl.classList.add('turn');
       fl._t1=setTimeout(()=>{fl.classList.toggle('back',b);fl.classList.add('out');void fl.offsetWidth;
-        fl.classList.remove('out','turn');},260);}
+        fl.classList.remove('out','turn');},220);}
     dl.querySelectorAll('.thumbs button[data-i]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===img)));
     if(focus)dl.querySelector('.thumbs button[data-i="'+img+'"]').focus();}
   else{render();if(focus)dl.querySelector('.thumbs button[data-i="'+img+'"]').focus();}
