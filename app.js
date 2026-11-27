@@ -126,7 +126,7 @@ NAMED.SAID.photo=false;
 const SAID={id:'DZC-8109-SNY',name:'SAİD NUMAN YÜCEL',short:'YÜCEL, SAİD N.',given:'SAİD NUMAN',sur:'YÜCEL',photo:true,
   img:'assets/yolcu/said-numan-yucel.webp',sigTxt:'Sny',docs:true,named:true,
   dept:'SİSMİK KALİBRASYON VE ALTYAPI DENETİMİ',
-  fields:[['GÖREV','BAŞ TEKNİKER / FAZ-2'],['YETKİ DÜZEYİ','SEVİYE 4 · KISITLI BÖLGE'],['KAN GRUBU','A Rh+'],['SENTETİK TAKVİYE','AKTİF'],['SİSTEM SERİ NO','SYS-8489-ARV-990'],['GEÇERLİLİK','2099.11.04 – 2101.11.03']],
+  fields:[['GÖREV','BAŞ TEKNİKER / FAZ-2'],['YETKİ DÜZEYİ','SEVİYE 4 · KISITLI BÖLGE'],['KAN GRUBU','A Rh+'],['SENTETİK TAKVİYE','AKTİF'],['SİSTEM SERİ NO','SYS-8489-SNY-990'],['GEÇERLİLİK','2099.11.04 – 2101.11.03']],
   zones:[1,-1,1,0,1,1,-1,-1],dev:.0034,face:98.6,route:['DZC-81','IST-34'],dep:'17.50',arr:'18.20',
   mrz:mkMrz('SAİD NUMAN','YÜCEL','DZC-8109-SNY','20991104M21011103'),nx:0,rations:3};
 const rtStr=r=>r[0]==='DZC-81'?'DZC-81 → '+r[1]:r[0]+' → DZC-81 → '+r[1];
@@ -339,7 +339,7 @@ const SCAN={
     {t:'ARKA YÜZ',img:'assets/urunler/kimlik-arka.webp',f:[
       ['BASELINE DURUMU','STABİL · 0.0034',[7,3.5,70,8.3]],
       ['KAN GRUBU / TAKVİYE','A Rh+ · AKTİF',[7,11.2,76,16.3]],
-      ['SİSTEM SERİ NO','SYS-8489-ARV-990',[7,18.8,44,24]],
+      ['SİSTEM SERİ NO','SYS-8489-SNY-990',[7,18.8,44,24]],
       ['HOLOGRAM MÜHÜR','承認 · GEÇERLİ',[11,32.5,71,71]]]}],
     sum:()=>[['YÜZ EŞLEŞME',fmt(cur.face,1)+'%'],['BİYOMETRİK İMZA',cur.sigTxt||'—']],
     done:'Özgün personel kartı OCR ile okundu · 10/10 alan kayıtla eşleşti'}
