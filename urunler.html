@@ -132,7 +132,10 @@ linear-gradient(var(--line2) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(
 .gal .main .tw>img,.gal .main .f0{display:block;height:var(--ih);width:auto;max-width:100%;object-fit:contain}
 .gal .main .tw>img{filter:drop-shadow(0 22px 30px rgba(0,0,0,.65))}
 .gal .main .flat{filter:none;box-shadow:0 20px 50px rgba(0,0,0,.65)}
-.gal .zoomhint{position:absolute;right:12px;top:12px;font-family:'Kode Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--mu);background:rgba(8,9,11,.7);padding:3px 8px;pointer-events:none}
+.gal .zoomhint{position:absolute;right:12px;top:12px;z-index:3;font-family:'Kode Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--mu);background:rgba(8,9,11,.75);border:1px solid var(--line);padding:5px 9px;cursor:zoom-in}
+.gal .zoomhint:hover{color:var(--fg);border-color:var(--c)}
+.gal .main.flipme{cursor:pointer}
+.gal .fhint{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);z-index:3;font-family:'Kode Mono',monospace;font-size:10px;letter-spacing:1.5px;color:var(--c);background:rgba(8,9,11,.75);padding:3px 8px;pointer-events:none;white-space:nowrap}
 .gal .cap{position:absolute;left:12px;bottom:12px;font-family:'Kode Mono',monospace;font-size:10.5px;letter-spacing:1.5px;background:rgba(8,9,11,.78);padding:3px 8px;pointer-events:none}
 .thumbs{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);flex:none}
 .thumbs button{background:var(--panel);border:1px solid var(--line);padding:6px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--fg);font-family:'Kode Mono',monospace;font-size:11px;letter-spacing:1px;min-width:0}
@@ -168,9 +171,9 @@ linear-gradient(var(--line2) 1px,transparent 1px) 0 0/32px 32px,linear-gradient(
 /* --- tipografi katmanı --- */
 .hero{position:relative;overflow:hidden}
 .hero .wrap{position:relative;z-index:1}
-.hjp{position:absolute;white-space:nowrap;right:clamp(10px,2vw,32px);top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-family:'M PLUS 1 Code',sans-serif;font-weight:700;font-size:clamp(48px,5.4vw,82px);line-height:1;letter-spacing:6px;color:transparent;-webkit-text-stroke:1px rgba(92,207,224,.2);pointer-events:none;user-select:none}
-.vjp{position:absolute;right:12px;top:30px;z-index:0;white-space:nowrap;writing-mode:vertical-rl;font-family:'M PLUS 1 Code',sans-serif;font-weight:700;font-size:clamp(22px,2.1vw,32px);line-height:1.05;letter-spacing:3px;color:transparent;-webkit-text-stroke:1px var(--c);opacity:.5;pointer-events:none;user-select:none;max-height:calc(100% - 60px);overflow:hidden}
-.gal .vjp{left:18px;right:auto;top:22px;font-size:clamp(44px,4.6vw,80px);opacity:.3}
+.hjp{position:absolute;white-space:nowrap;right:max(clamp(10px,2vw,32px),calc((100vw - 1440px)/2 + 12px));top:50%;transform:translateY(-50%);writing-mode:vertical-rl;font-family:'M PLUS 1 Code',sans-serif;font-weight:700;font-size:clamp(48px,5.4vw,82px);line-height:1;letter-spacing:6px;color:rgba(92,207,224,.09);pointer-events:none;user-select:none}
+.vjp{position:absolute;right:12px;top:30px;z-index:0;white-space:nowrap;writing-mode:vertical-rl;font-family:'M PLUS 1 Code',sans-serif;font-weight:700;font-size:clamp(22px,2.1vw,32px);line-height:1.05;letter-spacing:3px;color:var(--c);opacity:.22;pointer-events:none;user-select:none;max-height:calc(100% - 60px);overflow:hidden}
+.gal .vjp{left:18px;right:auto;top:22px;font-size:clamp(44px,4.6vw,80px);opacity:.16}
 .rule{position:absolute;left:12px;top:30px;bottom:36px;width:10px;z-index:0;opacity:.75;pointer-events:none;border-left:1px solid var(--c);
 background:repeating-linear-gradient(to bottom,var(--c) 0 1px,transparent 1px 40px) left top/10px 100% no-repeat,repeating-linear-gradient(to bottom,var(--mu) 0 1px,transparent 1px 8px) left top/5px 100% no-repeat}
 .rule b{position:absolute;left:13px;top:0;writing-mode:vertical-rl;font-family:'Kode Mono',monospace;font-weight:400;font-size:9.5px;letter-spacing:2px;color:var(--mu);white-space:nowrap}
@@ -196,10 +199,12 @@ background:linear-gradient(115deg,transparent 22%,rgba(255,60,200,.6) 36%,rgba(6
 @keyframes holo{from{background-position:0% 0%}to{background-position:100% 100%}}
 img.float{animation:float 5.5s ease-in-out infinite}
 @keyframes float{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -9px;rotate:-1.2deg}}
-.fl{position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.3,.7,.2,1)}
-.fl.back{transform:rotateY(180deg)}
-.fl .f0{backface-visibility:hidden;-webkit-backface-visibility:hidden}
-.fl .f1{position:absolute;inset:0;transform:rotateY(180deg);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fl{position:relative;transform:perspective(1100px) rotateY(0deg);transition:transform .26s cubic-bezier(.45,0,.55,1)}
+.fl.turn{transform:perspective(1100px) rotateY(90deg)}
+.fl.turn.out{transform:perspective(1100px) rotateY(-90deg);transition:none}
+.fl .f1{position:absolute;inset:0;visibility:hidden}
+.fl.back .f1{visibility:visible}
+.fl.back .f0{visibility:hidden}
 .fl .f1 img{display:block;width:100%;height:100%;box-shadow:0 20px 50px rgba(0,0,0,.65)}
 .thumbs .flipk{margin-left:auto;align-self:center;background:transparent;border:1px solid var(--c);color:var(--c);font-family:'Kode Mono',monospace;font-size:10.5px;letter-spacing:1.5px;padding:8px 12px;white-space:nowrap;box-shadow:none}
 .thumbs .flipk:hover{background:var(--c);color:var(--bg)}
@@ -399,7 +404,7 @@ function render(){
   '<div class="dh"><div class="l"><span class="mono">'+p.no+' / 04 · '+esc(p.code)+'</span><span class="jp">'+esc(p.jp)+'</span></div>'+
   '<div class="r"><button type="button" class="ib" id="dClose" aria-label="Kapat">KAPAT<span class="kf"> [ESC]</span> ✕</button></div></div>'+
   '<div class="db">'+
-   '<div class="gal"><div class="main" id="gMain" role="button" tabindex="0" aria-label="Görseli büyüt"><span class="vjp" aria-hidden="true">'+esc(p.jp.split(' · ')[0])+'</span>'+media(p)+'<span class="zoomhint">BÜYÜT ⤢</span><span class="cap" id="gCap">'+esc(im.t)+'</span></div>'+
+   '<div class="gal"><div class="main'+(p.flip?' flipme':'')+'" id="gMain" role="button" tabindex="0" aria-label="'+(p.flip?'Kartı çevir':'Görseli büyüt')+'"><span class="vjp" aria-hidden="true">'+esc(p.jp.split(' · ')[0])+'</span>'+media(p)+'<span class="cap" id="gCap">'+esc(im.t)+'</span>'+(p.flip?'<span class="fhint">TIKLA · ÇEVİR ⟲</span>':'')+'</div><button type="button" class="zoomhint" id="gZoom">BÜYÜT ⤢</button>'+
    (p.img.length>1?'<div class="thumbs">'+p.img.map((x,i)=>'<button type="button" data-i="'+i+'" aria-pressed="'+(i===img)+'" aria-label="'+esc(x.t)+'"><img src="'+A+x.s+'" alt=""><span>'+esc(x.t)+'</span></button>').join('')+(p.flip?'<button type="button" class="flipk" id="gFlipB">ÇEVİR ⟲<span class="kf"> [F]</span></button>':'')+'</div>':'')+
    '</div>'+
    '<div class="info"><span class="cat">'+esc(p.cat)+'</span><h2 id="dTitle" class="dec">'+esc(p.name)+'</h2><div class="tag">'+esc(p.tag)+'</div>'+
@@ -413,7 +418,9 @@ function render(){
   '<button type="button" id="dNext"><span class="t">'+esc(P[(cur+1)%4].short||P[(cur+1)%4].name)+'</span><span class="arr">▸</span></button></div>';
   $('dClose').onclick=()=>close(true);
   $('dPrev').onclick=()=>go(-1);$('dNext').onclick=()=>go(1);
-  const gm=$('gMain');gm.onclick=zoom;gm.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();zoom();}};
+  const gm=$('gMain'),act=()=>P[cur].flip?setFace(img?0:1,false):zoom();
+  gm.onclick=act;gm.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();act();}};
+  $('gZoom').onclick=zoom;
   dl.querySelectorAll('.thumbs button[data-i]').forEach(b=>b.onclick=()=>setFace(+b.dataset.i,true));
   if($('gFlipB'))$('gFlipB').onclick=()=>setFace(img?0:1,false);
   tilt(gm,$('gTw'));
@@ -426,7 +433,11 @@ function media(p){
 }
 function setFace(i,focus){
   const p=P[cur];if(i===img&&!p.flip)return;img=i;
-  if(p.flip){$('gFl').classList.toggle('back',img===1);$('gCap').textContent=p.img[img].t;
+  if(p.flip){const fl=$('gFl'),b=img===1;$('gCap').textContent=p.img[img].t;
+    if(RM)fl.classList.toggle('back',b);
+    else{clearTimeout(fl._t1);clearTimeout(fl._t2);fl.classList.remove('out');fl.classList.add('turn');
+      fl._t1=setTimeout(()=>{fl.classList.toggle('back',b);fl.classList.add('out');void fl.offsetWidth;
+        fl.classList.remove('out','turn');},260);}
     dl.querySelectorAll('.thumbs button[data-i]').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.i===img)));
     if(focus)dl.querySelector('.thumbs button[data-i="'+img+'"]').focus();}
   else{render();if(focus)dl.querySelector('.thumbs button[data-i="'+img+'"]').focus();}
