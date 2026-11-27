@@ -10,6 +10,10 @@ DZC-81 Geçiş ve Kontrol Düğümü'ndeki görevlilerin kullandığı terminal:
 - **F1 / 1** Onayla · **F2 / 2** Beklet · **F3 / 3** Nexus-X uygula · **F4 / 4** Reddet / Karantina
 - Karar süresi 30 sn; dolduğunda yolcu otomatik bekletmeye alınır.
 
+## Ürün kataloğu
+
+`/urunler` — Homeostaz evreninin dört nesnesini (Nexus-X, SYNTEX-81, transit geçiş belgesi, personel erişim kartı) bir arada tanıtan sayfa. Karta tıklayınca ayrıntı paneli açılır; her ürünün kendi bağlantısı vardır (`/urunler#nexus-x`, `#syntex`, `#bilet`, `#kimlik`). Terminalden **ÜRÜNLER [U]** ile açılır, katalogdaki butonlar terminale geri döner. Görseller `assets/urunler/` altında WebP olarak durur.
+
 ## Yapı
 
 Derleme gerektirmeyen statik site: `index.html`, `style.css`, `app.js`, `assets/`. Vercel'e doğrudan statik olarak yüklenir.

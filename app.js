@@ -357,7 +357,7 @@ function openSectors(focus){
 function openHelp(){
   openModal('GÖREVLİ KILAVUZU','手引き',
     '<div class="micro" style="font-size:13px;color:var(--fg)">Her denek için Temel Çizgi Testi otomatik ilerler (7 adım). Test bitince sistem bir öneri verir; karar sende. Kuyruktaki satırlara, taranan belgelere ve yetki matrisindeki bölgelere tıklayarak ayrıntıları açabilirsin.</div>'+
-    kv([['F1 · 1','ONAYLA (test bitince)'],['F2 · 2','BEKLET'],['F3 · 3','NEXUS-X UYGULA'],['F4 · 4','REDDET / KARANTİNA'],['P','TESTİ DURAKLAT / SÜRDÜR'],['M','SESİ AÇ / KAPAT'],['T','AYDINLIK / KARANLIK TEMA'],['ESC','PENCEREYİ KAPAT'],['S','SEKTÖR AĞI (81 KOD)'],['?','BU KILAVUZ']]),
+    kv([['F1 · 1','ONAYLA (test bitince)'],['F2 · 2','BEKLET'],['F3 · 3','NEXUS-X UYGULA'],['F4 · 4','REDDET / KARANTİNA'],['P','TESTİ DURAKLAT / SÜRDÜR'],['M','SESİ AÇ / KAPAT'],['T','AYDINLIK / KARANLIK TEMA'],['ESC','PENCEREYİ KAPAT'],['S','SEKTÖR AĞI (81 KOD)'],['U','ÜRÜN KATALOĞU'],['?','BU KILAVUZ']]),
     [{label:'ANLAŞILDI',kind:'primary',primary:true}]);
 }
 
@@ -473,6 +473,7 @@ addEventListener('keydown',e=>{
   else if(e.key==='m'||e.key==='M'){setSound(!soundOn);}
   else if(e.key==='?'){openHelp();}
   else if(e.key==='s'||e.key==='S'){openSectors();}
+  else if(e.key==='u'||e.key==='U'){location.href='urunler';}
   else if(e.key==='t'||e.key==='T'){applyTheme(theme==='light'?'dark':'light');}
 });
 
